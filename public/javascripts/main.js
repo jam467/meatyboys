@@ -12,6 +12,7 @@
 	var squads = [];
 	var players = [];
 	var rounds = [];
+	var draftData = [];
 	var match = 0;
 	var sortBy =0;
     var nameLength = 12;
@@ -67,7 +68,7 @@
 		fillData(gRound,cHomeId,currHome,cAwayId,currAway,match);
 	}
 	
-	var timer = setInterval(dlRounds, 30000);
+	//var timer = setInterval(dlRounds, 30000);
 	
 	function addAllUsers(){
 		
@@ -141,17 +142,32 @@
 		for (var i =0;i<players.length;i++){
 		
 			if((players[i].status == 'playing')){
-			
+				if((players[i].squad_id == team1Id)||(players[i].squad_id == team2Id)){
+					for(var k =0;k<draftData.length;k++){
+						dListNo = -1;
+						console.log((players[i].first_name+" "+players[i].last_name),draftData[k].playerName);
+						if((players[i].first_name+" "+players[i].last_name)==draftData[k].playerName){
+							dListNo = k;
+							k = draftData.length;
+						}
+					}
+				
+				}
 				if(players[i].squad_id == team1Id){
 					
 					var posName =  getPos(players[i].positions[0]);
 						
 					
 					
-					var t1Score = players[i].stats.scores[round];
-					if (t1Score == undefined){
-						t1Score = "-";
+					//Foxsport Score var t1Score = players[i].stats.scores[round];
+					//if (t1Score == undefined){
+					//	t1Score = "-";
+					//}
+					var t1Score = "-";
+					if (dListNo != -1){
+						var t1Score = draftData[dListNo].score;
 					}
+					
 					
 					team1.push({
 						name:(players[i].first_name+" "+players[i].last_name),
@@ -169,10 +185,15 @@
 					
 					
 					
-					var t2Score = players[i].stats.scores[round];
-					if (t2Score == undefined){
-						t2Score = "-";
+					//Foxsport Score var t2Score = players[i].stats.scores[round];
+					//if (t2Score == undefined){
+					//	t2Score = "-";
+					//}
+					var t2Score = "-";
+					if (dListNo != -1){
+						var t2Score = draftData[dListNo].score;
 					}
+					
 					team2.push({
 						name:(players[i].first_name+" "+players[i].last_name),
 						score:t2Score,
@@ -283,7 +304,6 @@
 				<span class="tValh">'+team1Value+'</span>\
 				<span>VS</span>\
 				<span class="tVala">'+team2Value+'</span>';
-		console.log(list);
 				
         table.innerHTML =  list;
 		setZoom();
@@ -375,7 +395,7 @@
 		}
 		orderedPlayers.sort(function(a, b){return b.priceChange-a.priceChange});
 		//list length
-		for (var i=0;i<20;i++){
+		for (var i=0;i<20;i++){/*
 			for(var j=0;j<users.length;j++){
 				for(var k=0;k<users[j].result.lineup[orderedPlayers[i].position].length;k++){
 					if(orderedPlayers[i].playerId==users[j].result.lineup[orderedPlayers[i].position][k]){
@@ -401,13 +421,12 @@
 					}
 				}
 				
-			}
+			}*/
 			var lColor = "#0dff05";
 			var rColor = "#FF2828";
 			list = list + '<tr class="myRow">\
 			<td width="5%" style="background-color:'+lColor+'">\
 			<div class="rOwner">\
-			'+orderedPlayers[i].owner+'\
 			</div>\
 			</td >\
 			<td width="5%" style="background-color:'+lColor+'">\
@@ -452,7 +471,6 @@
 			</td>\
 			<td width="5%" style="background-color:'+rColor+'">\
 			<div class="rOwner">\
-			'+orderedPlayers[b].owner+'\
 			</div>\
 			</td>\
 			</tr>'
@@ -691,7 +709,16 @@
 	}
 	function getPlayers(response){
 		players = response;
-		addUser();
-		
+		getDraft();		
+	}
+	function getDraft(){
+			$.get('/getDraft',function(data){
+				//console.log(data)
+				draftData = (data);
+				//console.log(draftData[0]);
+				addUser();
+				
+		});
+			
 	}
 

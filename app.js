@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var getRounds = require('./routes/getRounds');
 var getPlayers = require('./routes/getPlayers');
 var getSquads = require('./routes/getSquads');
+var getDraft = require('./routes/getDraft');
 
 var app = express();
 
@@ -28,6 +29,8 @@ app.use('/', index);
 app.use('/getRounds', getRounds);
 app.use('/getPlayers', getPlayers);
 app.use('/getSquads', getSquads);
+app.use('/getDraft', getDraft);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
