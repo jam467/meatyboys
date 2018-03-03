@@ -135,38 +135,27 @@
 		var table = document.getElementById("playerTable");
 		var list = "";
 		console.log(roundNum+1);
+		var team1Name = homeName;
+		var team2Name = awayName;
 		var team1Id = home;
 		var team2Id = away;
 		var round = roundNum+1;
 		console.log(players.length);
-		for (var i =0;i<players.length;i++){
+	/*	for (var i =0;i<players.length;i++){
 		
 			if((players[i].status == 'playing')){
-				if((players[i].squad_id == team1Id)||(players[i].squad_id == team2Id)){
-					for(var k =0;k<draftData.length;k++){
-						dListNo = -1;
-						console.log((players[i].first_name+" "+players[i].last_name),draftData[k].playerName);
-						if((players[i].first_name+" "+players[i].last_name)==draftData[k].playerName){
-							dListNo = k;
-							k = draftData.length;
-						}
-					}
 				
-				}
 				if(players[i].squad_id == team1Id){
 					
 					var posName =  getPos(players[i].positions[0]);
 						
 					
 					
-					//Foxsport Score var t1Score = players[i].stats.scores[round];
-					//if (t1Score == undefined){
-					//	t1Score = "-";
-					//}
-					var t1Score = "-";
-					if (dListNo != -1){
-						var t1Score = draftData[dListNo].score;
+					var t1Score = players[i].stats.scores[round];
+					if (t1Score == undefined){
+						t1Score = "-";
 					}
+					
 					
 					
 					team1.push({
@@ -185,14 +174,11 @@
 					
 					
 					
-					//Foxsport Score var t2Score = players[i].stats.scores[round];
-					//if (t2Score == undefined){
-					//	t2Score = "-";
-					//}
-					var t2Score = "-";
-					if (dListNo != -1){
-						var t2Score = draftData[dListNo].score;
+					var t2Score = players[i].stats.scores[round];
+					if (t2Score == undefined){
+						t2Score = "-";
 					}
+					
 					
 					team2.push({
 						name:(players[i].first_name+" "+players[i].last_name),
@@ -207,7 +193,80 @@
 					});
 				}
 			}
+		}*/ 
+		//Draft player name
+		for (var i =0;i<draftData.length;i++){
+		
+			// Matching Names
+			if((draftData[i].team == team1Name)||(draftData[i].team == team2Name)){
+				for(var k =0;k<players.length;k++){
+					dListNo = -1;
+					//console.log((players[i].first_name+" "+players[i].last_name),draftData[k].playerName);
+					if((players[k].first_name+" "+players[k].last_name)==draftData[i].playerName){
+						dListNo = k;
+						k = players.length;
+					}
+					if(dListNo==-1){
+						dListNo = 0;
+					}
+				}
+			
+			}
+			if(draftData[i].team == team1Name){
+				
+				var posName =  getPos(draftData[i].position);
+					
+			
+				//var t1Score = "-";
+				//if (draftData[i].score != 0){
+					var t1Score = draftData[i].score;
+				//}
+				var ownerName = "";
+				if((draftData[i].userName != "Free Agent")&&(draftData[i].userName.slice(0,7)!="WAIVERS")){
+					ownerName = draftData[i].userName;
+				}
+				team1.push({
+					name:draftData[i].playerName,
+					owner:ownerName,
+					score:t1Score,
+					playerId:players[dListNo].id,
+					position:draftData[i].position,
+					posName: posName,
+					priceP: getPricePoint(players[dListNo]),
+      				value:players[dListNo].stats.prices[round],
+					img: '<img height="71.14" width="56.92" src="http://dsj3fya52lhzn.cloudfront.net/media/fox_super_rugby/players/'+players[dListNo].id+'.png" alt="'+draftData[i].playerName+'">'
+				});
+			}else if(draftData[i].team == team2Name){
+				var ownerList2 = "";
+				var posName =  getPos(draftData[i].position);
+				
+				
+				
+			
+				//var t2Score = "-";
+				//if (draftData[i].score != 0){
+					var t2Score = draftData[i].score;
+				//}
+				var ownerName = "";
+				if((draftData[i].userName != "Free Agent")&&(draftData[i].userName.slice(0,7)!="WAIVERS")){
+					ownerName = draftData[i].userName;
+				}
+				team2.push({
+					name:draftData[i].playerName,
+					owner:ownerName,
+					score:t2Score,
+					playerId:players[dListNo].id,
+					position:draftData[i].position,
+					posName: posName,
+					value:players[dListNo].stats.prices[round],
+					priceP:getPricePoint(players[dListNo]),
+					img: '<img height="71.14" width="56.92" src="http://dsj3fya52lhzn.cloudfront.net/media/fox_super_rugby/players/'+players[dListNo].id+'.png" alt="'+draftData[i].playerName+'">'
+					
+				});
+			}
+			
 		}
+		console.log(team1);
 		var blankObj = {
 						name:'',
 						score:'',
@@ -248,7 +307,7 @@
 			list = list + '<tr class="myRow">\
 			<td width="5%" style="background-color:'+lColor+'">\
 			<div class="rOwner">\
-			'+'\
+			'+team1[i].owner+'\
 			</div>\
 			</td >\
 			<td width="5%" style="background-color:'+lColor+'">\
@@ -295,7 +354,7 @@
 			</td>\
 			<td width="5%" style="background-color:'+rColor+'">\
 			<div class="rOwner">\
-			'+'\
+			'+team2[i].owner+'\
 			</div>\
 			</td>\
 		</tr>'}
@@ -345,7 +404,7 @@
 	  if(moneyOn==0){
 		document.getElementById("homeVal").style.display="none";
 		document.getElementById("awayVal").style.display="none";
-		for(var i=0;i<25;i++){
+		for(var i=0;i<40;i++){
 		  if((document.getElementById("playH"+i))!=undefined){
 		    document.getElementById("playH"+i).style.display="none";
 		  }
@@ -356,7 +415,7 @@
 	  }else{
 		document.getElementById("homeVal").style.display="inline";
 		document.getElementById("awayVal").style.display="inline";
-		for(var i=0;i<25;i++){
+		for(var i=0;i<40;i++){
 		  if((document.getElementById("playH"+i))!=undefined){
 		    document.getElementById("playH"+i).style.display="inline";
 		  }
@@ -670,28 +729,25 @@
     }
 	function getPos(posNum){
 		switch(posNum){
-			case 1:
-				posName = "PRP"
+			case "Front Row":
+				posName = "FRW"
 				break;
-			case 2:
-				posName = "HOK"
-				break;
-			case 3:
+			case "Locks":
 				posName = "LOC"
 				break;
-			case 4:
+			case "Loose Forward":
 				posName = "BKR"
 				break;
-			case 5:
+			case "Half Back":
 				posName = "SHV"
 				break;
-			case 6:
+			case "Fly Half":
 				posName = "FLH"
 				break;
-			case 7:
+			case "Midfielders":
 				posName = "CTR"
 				break;
-			case 8:
+			case "Outside Backs":
 				posName = "OBK"
 				break;
 		}
