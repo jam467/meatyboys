@@ -68,7 +68,7 @@
 		fillData(gRound,cHomeId,currHome,cAwayId,currAway,match);
 	}
 	
-	//var timer = setInterval(dlRounds, 30000);
+	var timer = setInterval(dlRounds, 30000);
 	
 	function addAllUsers(){
 		
