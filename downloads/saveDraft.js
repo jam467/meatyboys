@@ -59,7 +59,7 @@ function getPage(pageNo){
 				}
 				complete++;
 				if(complete==16){
-					fs.writeFile('draft.js', JSON.stringify(matches), function (err) {
+					fs.writeFile('/home/ec2-user/meatyboys/meatyboys/downloads/draft.js', JSON.stringify(matches), function (err) {
   						//if (err) throw err;
  						console.log('Saved!');
 					});
