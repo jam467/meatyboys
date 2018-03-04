@@ -4,14 +4,10 @@ var request = require('request');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  	request({
-  		gzip: true,
-  		json:true,
-  		url:'https://fgp-data.s3-ap-southeast-2.amazonaws.com/json/fox_super_rugby/squads.json'}, function (error, response, body) {
-			res.send(body);
-	
-		}
-	);
+  fs.readFile('downloads/squads.js', function(err, data) {
+  		//console.log("james", JSON.parse(data),"James");
+  		res.send(JSON.parse(data));
+  	});
 });
 
 module.exports = router;
