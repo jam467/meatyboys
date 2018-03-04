@@ -2,3 +2,4 @@
 * * * * * ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/downloads/saveRounds.js
 * * * * * ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/downloads/savePlayers.js
 * * * * * ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/downloads/saveSquads.js
+0 17 * * * ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/downloads/getCookie.js
