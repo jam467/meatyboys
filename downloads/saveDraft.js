@@ -1,19 +1,49 @@
+
+
 var request = require('request');
 var fs = require('fs');
 
 var matches = [];
-var i =0;
 var j =0;
+var i =0;
 var complete = 0;
-fs.readFile('/home/ec2-user/meatyboys/meatyboys/downloads/cookie.js', function(err, data) {
-  		while(j<16){
-			getPage(j,data);
-			j++;
+fs.readFile('/home/ec2-user/meatyboys/meatyboys/downloads/rounds.js', function(err, roundsFile) {
+	var rounds = JSON.parse(roundsFile);
+	today = new Date();
+	
+	console.log(rounds[4].start);
+	var round = 0;
+	if(process.argv[2]=="1"){
+		for(var k=0;k<rounds.length;k++){
+		    roundDate =new Date(rounds[k].start);
+		    if(roundDate>today){
+		    	round = k;
+		    	k= rounds.length;
+		    }
 		}
-  		
-  	});
+    }
+	fs.readFile('/home/ec2-user/meatyboys/meatyboys/downloads/cookie.js', function(err, data) {
+		if(process.argv[2]=="0"){
+			for(var i=0;i<rounds.length;i++){
+				while(j<16){
+					getPage(j,data,i);
+				//	console.log('"'+round+'"');
+					j++;
+				}
+				sleep(600000);
+			}	
+		}else{
+			while(j<16){
+					getPage(j,data,round);
+				//	console.log('"'+round+'"');
+					j++;
+			}
+		}
+	});
+});
 
-function getPage(pageNo,cookie){
+function getPage(pageNo,cookie,round){
+	
 	request({
 			method: 'POST',
 			headers:{
@@ -21,7 +51,7 @@ function getPage(pageNo,cookie){
 			},
 			json:true,
 			url:'http://www.fantasyrugbydraft.com/Web/Services/Action.asmx/Request',
-			body:{"Data":'{"filter":"","leagueid":"89de18f0-4cc5-41e4-b4e1-a86f00b9f7bc","gameweek":"4","category":"255","seasons":"be414f72-b472-4358-98a6-a84600dbf701","owner":"256","position":256,"teamnews":"256","sort":"","pageno":'+pageNo+',"action":"member/league/playerhub","type":"control"}'}},
+			body:{"Data":'{"filter":"","leagueid":"89de18f0-4cc5-41e4-b4e1-a86f00b9f7bc","gameweek":'+round+',"category":"255","seasons":"be414f72-b472-4358-98a6-a84600dbf701","owner":"256","position":256,"teamnews":"256","sort":"","pageno":'+pageNo+',"action":"member/league/playerhub","type":"control"}'}},
 			function (error, response, body) {
 				var Content = JSON.parse(body.d)["Content"];
 				var regex = /playerid="(.{36})"/g;
@@ -63,7 +93,7 @@ function getPage(pageNo,cookie){
 				}
 				complete++;
 				if(complete==16){
-					fs.writeFile('/home/ec2-user/meatyboys/meatyboys/downloads/draft.js', JSON.stringify(matches), function (err) {
+					fs.writeFile('/home/ec2-user/meatyboys/meatyboys/downloads/draft'+round+'.js', JSON.stringify(matches), function (err) {
   						//if (err) throw err;
  						console.log('Saved!');
 					});
