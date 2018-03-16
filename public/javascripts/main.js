@@ -768,7 +768,7 @@
 		getDraft();		
 	}
 	function getDraft(){
-			$.get('/getDraft',function(data){
+			$.post('/getDraft',{"round":(gRound+1)},function(data){
 				//console.log(data)
 				draftData = (data);
 				//console.log(draftData[0]);
