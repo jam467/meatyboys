@@ -1,6 +1,5 @@
-*/3 * * * 4,5,6,0,1 ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/downloads/saveDraft.js 1
-0 0 * * 3 ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/downloads/saveDraft.js 0
-* * * * * ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/downloads/saveRounds.js
-* * * * * ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/downloads/savePlayers.js
-* * * * * ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/downloads/saveSquads.js
-0 17 * * * ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/downloads/getCookie.js
+*/3 * * * 4,5,6,0,1 ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/saveScripts/saveDraft.js 1
+* * * * 4,5,6,0,1 ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/saveScripts/saveRounds.js
+* * * * 4,5,6,0,1 ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/saveScripts/savePlayers.js
+* * * * 4,5,6,0,1 ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/saveScripts/saveSquads.js
+0 17 * * * ~/.nvm/versions/node/v9.5.0/bin/node /home/ec2-user/meatyboys/meatyboys/saveScripts/getCookie.js

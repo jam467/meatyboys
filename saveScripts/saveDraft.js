@@ -2,7 +2,6 @@
 
 var request = require('request');
 var fs = require('fs');
-var sleep = require('sleep');
 
 var matches = [];
 var j =0;
@@ -25,16 +24,10 @@ fs.readFile('/home/ec2-user/meatyboys/meatyboys/downloads/rounds.js', function(e
     }
 	fs.readFile('/home/ec2-user/meatyboys/meatyboys/downloads/cookie.js', function(err, data) {
 		if(process.argv[2]=="0"){
-			for(var i=1;i<rounds.length+1;i++){
-				j=0;
-				matches = [];
-				while(j<16){
-					getPage(j,data,i);
-				//	console.log('"'+round+'"');
+			while(j<16){
+					getPage(j,data,process.argv[3]);
 					j++;
-				}
-				//sleep.sleep(60);
-			}	
+			}
 		}else{
 			while(j<16){
 					getPage(j,data,round);

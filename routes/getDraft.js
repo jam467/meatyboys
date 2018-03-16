@@ -6,6 +6,7 @@ var fs = require('fs');
 
 router.post('/', function(req, res, next) {
 	var roundNo = req.body["round"];
+	console.log('downloads/draft'+roundNo+'.js');
 	var file = 'downloads/draft'+roundNo+'.js';
   	fs.readFile(file, function(err, data) {
   		//console.log("james", JSON.parse(data),"James");

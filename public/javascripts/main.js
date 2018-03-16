@@ -93,6 +93,7 @@
 	}
     function setRound(round){
         gRound = round;
+        getDraft();
         roundsThisWeek(1);
         fillData(gRound,fHomeId,firstHome,fAwayId,firstAway);
     }
@@ -768,6 +769,7 @@
 		getDraft();		
 	}
 	function getDraft(){
+			console.log(gRound+1);
 			$.post('/getDraft',{"round":(gRound+1)},function(data){
 				//console.log(data)
 				draftData = (data);
