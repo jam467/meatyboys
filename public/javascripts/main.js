@@ -15,46 +15,64 @@
 	var draftData = [];
 	var match = 0;
 	var sortBy =0;
+	var fox = 0;
     var nameLength = 12;
 	var roundFirstLoad =0;
 	$( document ).ready(function() {
 		$.get('/getSquads',function(data){
-				console.log(data)
+				//console.log(data)
 				squads = (data);
-				dlRounds();
+				getRounds();
 		});
 		listRounds(17);
 		var byeDropList = document.getElementById("navBar").innerHTML;
 	});
-	
-    function listRounds(noRounds){
-        var roundList = '';
-        for(var i=0;i<noRounds;i++){
-            roundList = roundList + '<li><a href="javascript:;" onclick="setRound('+(i)+')" id="priceChanges" data-toggle="collapse" data-target=".navbar-collapse.in" >Round '+(i+1)+'</a></li>'
-        }
-        document.getElementById("roundList").innerHTML = roundList;
-    }
     
-	function dlRounds(){
+	function getRounds(){
 		rounds = []
 		$.get('/getRounds',function(data){
-			console.log(data);
-			getRounds(data);
+			//console.log(data);
+			rounds = data;
+			if(roundFirstLoad==0){
+				roundsThisWeek();
+			}
+			getPlayers();
 		});
 	}
 	
-	function dlPlayers(){
+	function getPlayers(){
 		 var d = new Date();
 		//document.getElementById("timestamp").innerHTML = d.toLocaleTimeString();
 		users = [];
 		players = [];
 		$.get('/getPlayers',function(data){
-				players = (data);
-				console.log(data);
-				getPlayers(data);
+			players = (data);
+			//console.log(data);
+			players = data;
+			getDraft();	
 		});
 		
 	}
+	function getDraft(){
+		$.post('/getDraft',{"round":(gRound+1)},function(data){
+			//console.log(data)
+			draftData = (data);
+			if(roundFirstLoad==0){
+				fillData(gRound,fHomeId,firstHome,fAwayId,firstAway,match);
+				roundFirstLoad++;
+			}else{
+				console.log(gRound,cHomeId,currHome,cAwayId,currAway);
+				fillData(gRound,cHomeId,currHome,cAwayId,currAway,match);
+			}
+		});		
+	}
+	function listRounds(noRounds){
+    	var roundList = '';
+        for(var i=0;i<noRounds;i++){
+            roundList = roundList + '<li><a href="javascript:;" onclick="setRound('+(i)+')" id="priceChanges" data-toggle="collapse" data-target=".navbar-collapse.in" >Round '+(i+1)+'</a></li>'
+        }
+        document.getElementById("roundList").innerHTML = roundList;
+    }
 	
 	function toggleSortBy(){
 		var button = document.getElementById("sortBy");
@@ -67,12 +85,22 @@
 		}
 		fillData(gRound,cHomeId,currHome,cAwayId,currAway,match);
 	}
-	
-	var timer = setInterval(dlRounds, 30000);
-	
-	function addAllUsers(){
-		
+	function toggleFox(){
+		var button = document.getElementById("foxsport");
+		if(fox==0){
+			fox = 1;
+			button.firstChild.data = "Draft Scores";
+		}else{
+			fox = 0;
+			button.firstChild.data = "Foxsports Scores";
+		}
+		fillData(gRound,cHomeId,currHome,cAwayId,currAway,match);
 	}
+	
+	
+	var timer = setInterval(getRounds, 30000);
+	
+
 	var loadedOnce =0;
 	
 	function setZoom(){
@@ -121,7 +149,6 @@
 
 
 	function fillData(roundNum,home,homeName,away,awayName,matchNo){
-		onRegular = 0;
 		var scores = getScore(home,away);
 		match = matchNo;
 		document.getElementById("round").innerHTML= "Round "+ (gRound+1)+'<span class="caret"></span>';
@@ -135,66 +162,11 @@
 		var team2 = [];
 		var table = document.getElementById("playerTable");
 		var list = "";
-		console.log(roundNum+1);
 		var team1Name = homeName;
 		var team2Name = awayName;
 		var team1Id = home;
 		var team2Id = away;
 		var round = roundNum+1;
-		console.log(players.length);
-	/*	for (var i =0;i<players.length;i++){
-		
-			if((players[i].status == 'playing')){
-				
-				if(players[i].squad_id == team1Id){
-					
-					var posName =  getPos(players[i].positions[0]);
-						
-					
-					
-					var t1Score = players[i].stats.scores[round];
-					if (t1Score == undefined){
-						t1Score = "-";
-					}
-					
-					
-					
-					team1.push({
-						name:(players[i].first_name+" "+players[i].last_name),
-						score:t1Score,
-						playerId:players[i].id,
-						position:players[i].positions[0],
-						posName: posName,
-						priceP: getPricePoint(players[i]),
-          value:players[i].stats.prices[round],
-						img: '<img height="71.14" width="56.92" src="http://dsj3fya52lhzn.cloudfront.net/media/fox_super_rugby/players/'+players[i].id+'.png" alt="'+(players[i].first_name+" "+players[i].last_name)+'">'
-					});
-				}else if(players[i].squad_id == team2Id){
-					var ownerList2 = "";
-					var posName =  getPos(players[i].positions[0]);
-					
-					
-					
-					var t2Score = players[i].stats.scores[round];
-					if (t2Score == undefined){
-						t2Score = "-";
-					}
-					
-					
-					team2.push({
-						name:(players[i].first_name+" "+players[i].last_name),
-						score:t2Score,
-						playerId:players[i].id,
-						position:players[i].positions[0],
-						posName: posName,
-						value:players[i].stats.prices[round],
-						priceP:getPricePoint(players[i]),
-						img: '<img height="71.14" width="56.92" src="http://dsj3fya52lhzn.cloudfront.net/media/fox_super_rugby/players/'+players[i].id+'.png" alt="'+(players[i].first_name+" "+players[i].last_name)+'">'
-						
-					});
-				}
-			}
-		}*/ 
 		//Draft player name
 		for (var i =0;i<draftData.length;i++){
 		
@@ -211,17 +183,26 @@
 						dListNo = 0;
 					}
 				}
-			
+				if(dListNo ==0){
+					console.log(draftData[i].playerName);
+				}
 			}
 			if(draftData[i].team == team1Name){
 				
-				var posName =  getPos(draftData[i].position);
+				var posDetails =  getPos(draftData[i].position);
 					
 			
-				//var t1Score = "-";
-				//if (draftData[i].score != 0){
-					var t1Score = draftData[i].score;
-				//}
+				var t1Score = 0;
+				
+				if(fox==0){
+					t1Score = draftData[i].score;
+				}else{
+					t1Score = players[dListNo].stats.scores[round];
+					if (t1Score == undefined){
+						t1Score = 0;
+					}
+				}
+					
 				var ownerName = "";
 				if((draftData[i].userName != "Free Agent")&&(draftData[i].userName.slice(0,7)!="WAIVERS")){
 					ownerName = draftData[i].userName;
@@ -231,23 +212,28 @@
 					owner:ownerName,
 					score:t1Score,
 					playerId:players[dListNo].id,
-					position:draftData[i].position,
-					posName: posName,
+					position:posDetails.posNum,
+					posName: posDetails.posName,
 					priceP: getPricePoint(players[dListNo]),
       				value:players[dListNo].stats.prices[round],
 					img: '<img height="71.14" width="56.92" src="http://dsj3fya52lhzn.cloudfront.net/media/fox_super_rugby/players/'+players[dListNo].id+'.png" alt="'+draftData[i].playerName+'">'
 				});
 			}else if(draftData[i].team == team2Name){
 				var ownerList2 = "";
-				var posName =  getPos(draftData[i].position);
+				var posDetails =  getPos(draftData[i].position);
 				
 				
 				
-			
-				//var t2Score = "-";
-				//if (draftData[i].score != 0){
-					var t2Score = draftData[i].score;
-				//}
+				var t2Score = 0;
+				if(fox==0){
+					t2Score = draftData[i].score;
+				}else{
+					t2Score = players[dListNo].stats.scores[round];
+					if (t2Score == undefined){
+						t2Score = 0;
+					}
+				}
+				
 				var ownerName = "";
 				if((draftData[i].userName != "Free Agent")&&(draftData[i].userName.slice(0,7)!="WAIVERS")){
 					ownerName = draftData[i].userName;
@@ -257,8 +243,8 @@
 					owner:ownerName,
 					score:t2Score,
 					playerId:players[dListNo].id,
-					position:draftData[i].position,
-					posName: posName,
+					position:posDetails.posNum,
+					posName: posDetails.posName,
 					value:players[dListNo].stats.prices[round],
 					priceP:getPricePoint(players[dListNo]),
 					img: '<img height="71.14" width="56.92" src="http://dsj3fya52lhzn.cloudfront.net/media/fox_super_rugby/players/'+players[dListNo].id+'.png" alt="'+draftData[i].playerName+'">'
@@ -288,9 +274,9 @@
 			team2.sort(function(a, b){return b.score-a.score});
 		}
 		var team1Value = getTeamValue(team1).toLocaleString();
-  var team2Value = getTeamValue(team2).toLocaleString();
-  document.getElementById("homeVal").innerHTML=' ($'+team1Value+')';
-  document.getElementById("awayVal").innerHTML=' ($'+team2Value+')';
+  		var team2Value = getTeamValue(team2).toLocaleString();
+  		document.getElementById("homeVal").innerHTML=' ($'+team1Value+')';
+		document.getElementById("awayVal").innerHTML=' ($'+team2Value+')';
 		if(team1.length<team2.length){
 			diff = team2.length - team1.length;
 			for(var l =0;l<diff;l++){
@@ -369,12 +355,6 @@
 		setZoom();
 		showMoney(1);
 	}
-	function checkPlaying(user){
-		
-
-
-
-	}
 	function getTeamValue(team){
 		var teamVal = 0;
 		for(var i =0;i<team.length;i++){
@@ -426,119 +406,7 @@
 		}
 	  }
 	}
-	function priceChanges(){
-		onRegular = 1;
-		var orderedPlayers = [];
-		document.getElementById("homeT").innerHTML='Going Up';
-		document.getElementById("awayT").innerHTML='Going Down';
-		var table = document.getElementById("playerTable");
-		var list = "";
-		var round = gRound+1;
-		var j = 0;
-		for (var i =0;i<players.length;i++){
-			var newPrice = players[i].stats.prices[round];
-			var oldPrice = players[i].stats.prices[round-1];
-			if((oldPrice!=undefined)&&(newPrice!=undefined)){
-				var posName =  getPos(players[i].positions[0]);
-				orderedPlayers[j] = {
-						priceChange: newPrice-oldPrice,
-						name:(players[i].first_name+" "+players[i].last_name),
-						playerId:players[i].id,
-						position:players[i].positions[0],
-						posName: posName,
-						owner: '',
-						img: '<img height="71.14" width="56.92" src="http://dsj3fya52lhzn.cloudfront.net/media/fox_super_rugby/players/'+players[i].id+'.png" alt="'+(players[i].first_name+" "+players[i].last_name)+'">'
-				}
-				j++;
-			}
-		
-		}
-		orderedPlayers.sort(function(a, b){return b.priceChange-a.priceChange});
-		//list length
-		for (var i=0;i<20;i++){/*
-			for(var j=0;j<users.length;j++){
-				for(var k=0;k<users[j].result.lineup[orderedPlayers[i].position].length;k++){
-					if(orderedPlayers[i].playerId==users[j].result.lineup[orderedPlayers[i].position][k]){
-						if(users[j].result.lineup.captain==orderedPlayers[i].playerId){
-							orderedPlayers[i].owner =orderedPlayers[i].owner + users[j].result.last_name.substring(0,nameLength)+"(C)<br>";
-						}else{
-							orderedPlayers[i].owner =orderedPlayers[i].owner + users[j].result.last_name.substring(0,nameLength)+"<br>";
-						}
-					}
-				}
-				
-			}
-			var b = orderedPlayers.length-1-i;
-			console.log("d"+b+"I"+i);
-			for(var j=0;j<users.length;j++){
-				for(var k=0;k<users[j].result.lineup[orderedPlayers[b].position].length;k++){
-					if(orderedPlayers[b].playerId==users[j].result.lineup[orderedPlayers[b].position][k]){
-						if(users[j].result.lineup.captain==orderedPlayers[b].playerId){
-							orderedPlayers[b].owner =orderedPlayers[b].owner+users[j].result.last_name.substring(0,nameLength)+"(C)<br>";
-						}else{
-							orderedPlayers[b].owner =orderedPlayers[b].owner+users[j].result.last_name.substring(0,nameLength)+"<br>";
-						}
-					}
-				}
-				
-			}*/
-			var lColor = "#0dff05";
-			var rColor = "#FF2828";
-			list = list + '<tr class="myRow">\
-			<td width="5%" style="background-color:'+lColor+'">\
-			<div class="rOwner">\
-			</div>\
-			</td >\
-			<td width="5%" style="background-color:'+lColor+'">\
-			<div class="rScore">\
-			$'+orderedPlayers[i].priceChange+'\
-			</div>\
-			</td>\
-			<td width="31%" style="background-color:'+lColor+'">\
-			<div class="rName">\
-			'+orderedPlayers[i].name+'\
-			</div>\
-			</td>\
-			<td width="5%" class="rImg" style="background-color:'+lColor+'">\
-			'+orderedPlayers[i].img+'\
-			</td>\
-			<td width="3%" style="background-color:'+lColor+'">\
-			<div class="verticaltext">\
-			'+orderedPlayers[i].posName+'\
-			</div>\
-			</td>\
-			<td width="2%" >\
-			<br>\
-			VS\
-			</td>\
-			<td width="3%"  style="background-color:'+rColor+'">\
-			<div class="verticaltext">\
-			'+orderedPlayers[b].posName+'\
-			</div>\
-			</td>\
-			<td width="5%"  class="rImg" style="background-color:'+rColor+'">\
-			'+orderedPlayers[b].img+'\
-			</td>\
-			<td width="31%" style="background-color:'+rColor+'">\
-			<div class="rName">\
-			'+orderedPlayers[b].name+'\
-			</div>\
-			</td>\
-			<td width="5%"style="background-color:'+rColor+'">\
-			<div class="rScore">\
-			$'+orderedPlayers[b].priceChange+'\
-			</div>\
-			</td>\
-			<td width="5%" style="background-color:'+rColor+'">\
-			<div class="rOwner">\
-			</div>\
-			</td>\
-			</tr>'
-			table.innerHTML =  list;
-		}
-		
-		
-	}
+	
 	function updateByMatch(matchNo){
 	  console.log(matchNo);
 	  for(var i=0;i<squads.length;i++){
@@ -577,96 +445,84 @@
     allowPageScroll:"vertical"
   });
 });
-	function roundsThisWeek(changeRound){
-		var found = 0;
-		var round = 0;
-        if(changeRound==null){
-            for(var i=0;i<rounds.length;i++){
-                if(((rounds[i].status=="scheduled")||(rounds[i].status=="active"))&&(found!=1)){
-                    round = i;
-                    found = 1;
-                }
-		     }
-        }else{
-            round = gRound;
-        }
-		var navBar = '';
-		var homeTeam = '';
-		var awayTeam = '';
-		var hfound = 0;
-		var afound = 0;
-		var matchNow = 0;
-		var noBye = [];
-		var matchOn = 0;
-        
-		for(var j=0;j<rounds[round].matches.length;j++){
-			for(var k=0;k<squads.length;k++){
-				if(rounds[round].matches[j].home_squad_id==squads[k].id){
-					homeTeam = squads[k].name;
-					homeId = squads[k].id;
-					if(hfound!=1){
-						firstHome = homeTeam;
-						matchOn = j;
-					}
-					hfound = 1;
-                    noBye.push(homeTeam);
-				}
-				if(rounds[round].matches[j].away_squad_id==squads[k].id){
-					awayTeam = squads[k].name;
-					awayId = squads[k].id;
-					if(afound!=1){
-						firstAway = awayTeam;
-					}
-					afound = 1;
-                    noBye.push(awayTeam);
-				}
+function roundsThisWeek(changeRound){
+	var found = 0;
+	var round = 0;
+	if(changeRound==null){
+		for(var i=0;i<rounds.length;i++){
+			if(((rounds[i].status=="scheduled")||(rounds[i].status=="active"))&&(found!=1)){
+				round = i;
+				found = 1;
 			}
-			navBar = navBar + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="javascript:;" onClick="fillData('+round+',\''+homeId+'\',\''+homeTeam+'\',\''+awayId+'\',\''+awayTeam+'\',\''+j+'\')">'+homeTeam+' v '+awayTeam+'</a></li>';
-			var today = new Date();
-			var matchTime = new Date(rounds[round].matches[j].date);
-    if(matchNow==0){
-			  if(today<matchTime.setHours(matchTime.getHours()+2)){
-				  firstAway = awayTeam;
-				  firstHome = homeTeam;
-				  matchOn = j;
-				  match = j;
-				  matchNow += 1;
-				  console.log(matchNow);
-			  }
-    }
 		}
-		document.getElementById("games").innerHTML = navBar;
-		gRound = round;
-		fAwayId = rounds[round].matches[matchOn].away_squad_id;
-		fHomeId = rounds[round].matches[matchOn].home_squad_id;
-        //find byes
-        var byes = "";
-        for(var k=0;k<squads.length;k++){
-            var fNoBye = 0;
-            for(var j=0;j<noBye.length;j++){
-                if(noBye[j]==squads[k].name){
-                    fNoBye = 1;
-                }
-            }
-            if(fNoBye==0){
-                byes = byes + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in">'+squads[k].name+'</a></li>';
-            }
-        }
-		document.getElementById("byes").innerHTML=byes;
+	}else{
+		round = gRound;
 	}
-	function addUser(){
-			if(currAway==""){
-				fillData(gRound,fHomeId,firstHome,fAwayId,firstAway,match);
-			}else{
-				if(onRegular==0){
-					console.log(gRound,cHomeId,currHome,cAwayId,currAway);
-					fillData(gRound,cHomeId,currHome,cAwayId,currAway,match);
-				}else{
-					priceChanges();
+	var navBar = '';
+	var homeTeam = '';
+	var awayTeam = '';
+	var hfound = 0;
+	var afound = 0;
+	var matchNow = 0;
+	var noBye = [];
+	var matchOn = 0;
+
+	for(var j=0;j<rounds[round].matches.length;j++){
+		for(var k=0;k<squads.length;k++){
+			if(rounds[round].matches[j].home_squad_id==squads[k].id){
+				homeTeam = squads[k].name;
+				homeId = squads[k].id;
+				if(hfound!=1){
+					firstHome = homeTeam;
+					matchOn = j;
 				}
+				hfound = 1;
+				noBye.push(homeTeam);
 			}
-			
+			if(rounds[round].matches[j].away_squad_id==squads[k].id){
+				awayTeam = squads[k].name;
+				awayId = squads[k].id;
+				if(afound!=1){
+					firstAway = awayTeam;
+				}
+				afound = 1;
+				noBye.push(awayTeam);
+			}
 		}
+		navBar = navBar + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="javascript:;" onClick="fillData('+round+',\''+homeId+'\',\''+homeTeam+'\',\''+awayId+'\',\''+awayTeam+'\',\''+j+'\')">'+homeTeam+' v '+awayTeam+'</a></li>';
+		var today = new Date();
+		var matchTime = new Date(rounds[round].matches[j].date);
+		if(matchNow==0){
+			if(today<matchTime.setHours(matchTime.getHours()+2)){
+				firstAway = awayTeam;
+				firstHome = homeTeam;
+				matchOn = j;
+				match = j;
+				matchNow += 1;
+				console.log(matchNow);
+			}
+		}
+	}
+	document.getElementById("games").innerHTML = navBar;
+	gRound = round;
+	fAwayId = rounds[round].matches[matchOn].away_squad_id;
+	fHomeId = rounds[round].matches[matchOn].home_squad_id;
+	//find byes
+	var byes = "";
+	for(var k=0;k<squads.length;k++){
+		var fNoBye = 0;
+		for(var j=0;j<noBye.length;j++){
+			if(noBye[j]==squads[k].name){
+				fNoBye = 1;
+			}
+		}
+		if(fNoBye==0){
+			byes = byes + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in">'+squads[k].name+'</a></li>';
+		}
+	}
+	document.getElementById("byes").innerHTML=byes;
+}
+	
     function chooseColour(team){
         switch(team){
 			case "Stormers":
@@ -728,55 +584,40 @@
         
         
     }
-	function getPos(posNum){
-		switch(posNum){
+	function getPos(posRef){
+		var posName = '';
+		var posRank = '';
+		switch(posRef){
 			case "Front Row":
-				posName = "FRW"
+				posName = "FRW";
+				posNum = 0;
 				break;
 			case "Locks":
-				posName = "LOC"
+				posName = "LOC";
+				posNum = 1;
 				break;
 			case "Loose Forward":
-				posName = "BKR"
+				posName = "BKR";
+				posNum = 2;
 				break;
 			case "Half Back":
-				posName = "SHV"
+				posName = "SHV";
+				posNum = 3;
 				break;
 			case "Fly Half":
-				posName = "FLH"
+				posName = "FLH";
+				posNum = 4;
 				break;
 			case "Midfielders":
-				posName = "CTR"
+				posName = "CTR";
+				posNum = 5;
 				break;
 			case "Outside Backs":
-				posName = "OBK"
+				posName = "OBK";
+				posNum = 6;
 				break;
 		}
-		return posName;
+		return {'posName':posName,'posNum':posNum};
 							
 					
 	}
-	function getRounds(response){
-		rounds = response;
-		if(roundFirstLoad==0){
-			roundsThisWeek();
-			roundFirstLoad += 1;
-		}
-		dlPlayers();
-	}
-	function getPlayers(response){
-		players = response;
-		getDraft();		
-	}
-	function getDraft(){
-			console.log(gRound+1);
-			$.post('/getDraft',{"round":(gRound+1)},function(data){
-				//console.log(data)
-				draftData = (data);
-				//console.log(draftData[0]);
-				addUser();
-				
-		});
-			
-	}
-
