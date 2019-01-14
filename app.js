@@ -10,6 +10,7 @@ var getRounds = require('./routes/getRounds');
 var getPlayers = require('./routes/getPlayers');
 var getSquads = require('./routes/getSquads');
 var getDraft = require('./routes/getDraft');
+var Draft = require('./routes/Draft');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/getRounds', getRounds);
 app.use('/getPlayers', getPlayers);
 app.use('/getSquads', getSquads);
 app.use('/getDraft', getDraft);
+app.use('/Draft', Draft);
 
 
 // catch 404 and forward to error handler
