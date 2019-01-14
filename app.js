@@ -11,6 +11,12 @@ var getPlayers = require('./routes/getPlayers');
 var getSquads = require('./routes/getSquads');
 var getDraft = require('./routes/getDraft');
 var Draft = require('./routes/Draft');
+var getDraft = require('./routes/draftDay/getRemaining');
+var setDraft = require('./routes/draftDay/setRemaining');
+var startTimer = require('./routes/timer');
+var getTimer = require('./routes/draftDay/getTimer');
+var setUsers = require('./routes/draftDay/setUsers');
+var getUsers = require('./routes/draftDay/getUsers');
 
 var app = express();
 
@@ -30,8 +36,14 @@ app.use('/', index);
 app.use('/getRounds', getRounds);
 app.use('/getPlayers', getPlayers);
 app.use('/getSquads', getSquads);
+app.use('/startTimer', startTimer);
 app.use('/getDraft', getDraft);
 app.use('/Draft', Draft);
+app.use('/getDraft', getDraft);
+app.use('/setDraft', setDraft);
+app.use('/getUsers', getUsers);
+app.use('/setUsers', setUsers);
+app.use('/getTimer', getTimer);
 
 
 // catch 404 and forward to error handler

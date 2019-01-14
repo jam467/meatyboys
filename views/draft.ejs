@@ -15,8 +15,86 @@
 			<script src="javascripts/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 			<script src="javascripts/draft.js"></script>
 			<!--<link rel="stylesheet" href="css/styles.css?v=1.0">-->
-<style>
-</style>
+            <style>
+
+                    .myTable{
+                        color: black;
+                    }
+                    .myTTitle{
+                        font-size: 160%;
+                        text-align:center;
+                    }
+                    .myRow{
+                        border: 2px solid black;
+                        text-align:center;
+                    }
+                    .rName {
+                        font-size: 200%;
+                        padding-top:15px;
+                        
+                    }
+                    .rScore{
+                        padding-top:0px;
+                        font-size: 350%;
+                    }
+                    .rOwner{
+                        font-size: 120%;
+                    }
+                    .navButton{
+                        display:inline-block;
+                    }
+                    .verticaltext{
+                        width:1px;
+                        word-wrap: break-word;
+                        padding:0px;
+                        text-align:center;
+                    }
+                    .navBar{
+                        display:inline-block;
+                    }
+                    .loader{
+                         position: relative;
+                        left: 40%;
+                    }
+                    .timeStamp{
+                        float: right;
+                    }
+                    .heading{
+                        text-align:center;
+                        font-size:200%;
+                        font-weight:bold;
+                    }
+                    .titleH{
+                        padding-right:15%;
+                    }
+                    .titleA{
+                        padding-left:15%;
+                    }
+                    .dropStyle{
+                       text-align:center;
+                    }
+                
+                    .bodyStyle{
+                        padding-top:60px;
+                    }
+                    .leftBorder{
+                        border-left:2px;
+                        border-color:#9d9d9d;
+                        border-left-style: solid;
+                    }
+                    .tValh{
+                      font-size:200%;
+                      padding-right:15%;
+                      padding-left:15%;
+                      
+                    }
+                    .tVala{
+                      font-size:200%;
+                      padding-left:15%;
+                      padding-right:15%;
+                    }
+                
+                </style>
 	</head>
 	<body>
 		<nav id="navZoom" class="navbar navbar-inverse navbar-fixed-top navFormat">
@@ -36,12 +114,20 @@
 			</div>
 		</nav>
 		<div class="container-fluid bodyStyle" id="dashSpace" >
-			<div class="heading">
-			</div>
-			<table  class="table myTable" id="playerTable" >
-            </table>
-            <table  class="table myTable" id="myPlayers" >
-			</table>
+			<div class="heading" id="timer">
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                        <table  class="table myTable" id="playerTable" >
+                        </table>
+                </div>
+                <div class="col-sm-6">
+                        <table  class="table myTable" id="myPlayers" >
+                        </table>
+                </div>
+            </div>
+			
+            
 		</div>
 	</body>
 </html>
