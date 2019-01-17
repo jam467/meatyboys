@@ -2,13 +2,18 @@ var selectedUser = 'NOONE';//set this on input
 var userStore = {};
 var playerList = [];
 var isActive = false;
-var killTimer = false;
 var selectionTime = 90 * 1000;
 let timer;
 render();
+
 function render(){
     if(timer!=undefined){
         clearInterval(timer);
+    }
+    if(selectedUser=='all'){
+        document.getElementById('toUser').style.display='block';
+        document.getElementById('userRow').style.display='none';
+        document.getElementById('allRow').style.display='block';
     }
     clearInterval(timer);
     getDraft().then((players)=>{
@@ -29,12 +34,28 @@ function save(){
         });
     });
 }
+function updateChecker(time){
+    return new Promise((resolve,reject)=>{
+        $.get('/getTimer',function(data){
+            if(time!=data.time){
+                resolve();
+            }else{
+                reject();
+            }
+        });
+    })
+}
 function countDownTimer(time,usr){
     var countDownDate = new Date(time);
     countDownDate = countDownDate.setTime(countDownDate.getTime() + (selectionTime));
 	// Update the count down every 1 second
 	timer = setInterval(function() {
-		
+		updateChecker(time).then(()=>{
+            clearInterval(timer);
+            render();
+        }).catch(()=>{
+
+        })
 		// Get todays date and time
 		var now = new Date().getTime();
 
@@ -50,8 +71,7 @@ function countDownTimer(time,usr){
 		document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s " + "( " +usr+" ) ";
 
 		// If the count down is finished, write some text 
-		if ((distance < 0)||(killTimer==true)) {
-            killTimer =false;
+		if ((distance < 0)) {
             clearInterval(timer);
             setTimeout(function(){
                 render();
@@ -84,7 +104,11 @@ function getDraft(){
             for(var i =0;i<players.length;i++){
                 playerTable = playerTable+ '<tr><td onClick="addPlayer('+i+')">'+players[i].rank+')   '+players[i].name+'</td></tr>';
             }
-            document.getElementById('playerTable').innerHTML = '<tr><th>Remaining Players</th></tr>' + playerTable;
+            var tableChoice = 'playerTable';
+            if(selectedUser=='all'){
+                tableChoice = 'playerTableAll';
+            }
+            document.getElementById(tableChoice).innerHTML = '<tr><th>Remaining Players</th></tr>' + playerTable;
             resolve(players);
         });
     })
@@ -114,16 +138,18 @@ function getUsers(){
             console.log(userStore[selectedUser]);
             var userTable = '';
             if(selectedUser=='all'){
+                userTable = userTable + '<div class="row">'
                 Object.keys(userStore).forEach(function(usr){
                     if(userStore[usr]==undefined){
                         userStore[usr] = [];
                     }
-                    userTable = userTable + '<tr><th>'+usr+'</th></tr>';
+                    userTable = userTable + '<div class="col-sm-1"><table class="table myTable" ><tr><th>'+usr+'</th></tr>';
                     for(var i =0;i<userStore[usr].length;i++){
                         userTable = userTable+ '<tr><td onClick="removePlayer('+i+',\''+usr+'\')">'+userStore[usr][i].rank+')   '+userStore[usr][i].name+'</td></tr>';
                     }
+                    userTable = userTable + '</table></div>';
                 });
-                document.getElementById('myPlayers').innerHTML = userTable;
+                document.getElementById('allPlayers').innerHTML = userTable+'</div>';
             }else{
                 if(userStore[selectedUser]==undefined){
                     userStore[selectedUser] = [];
@@ -153,6 +179,19 @@ function addPlayer(id){
             save().then(()=>{
                 render();
             });
+        }
+    }else{
+        if(selectedUser=='all'){
+            var toUser = document.getElementById('toUser').value;
+            if(userStore[toUser]!=undefined){
+                userStore[toUser].push(playerList[id]);
+                playerList.splice(id,1);
+                save().then(()=>{
+                    render();
+                });
+            }else{
+                alert('USER NAME INCORRECT');
+            }
         }
     }
 }
