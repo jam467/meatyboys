@@ -1,1 +1,1 @@
-{"James":[{"rank":1,"name":"Dan Mackensie"},{"rank":3,"name":"Folau"}],"Jonty":[{"rank":1,"name":"Bam Magkensie"}]}
+{"James":[{"rank":1,"name":"Bam Magkensie"}],"Jonty":[]}

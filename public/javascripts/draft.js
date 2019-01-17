@@ -53,7 +53,9 @@ function countDownTimer(time,usr){
 		if ((distance < 0)||(killTimer==true)) {
             killTimer =false;
             clearInterval(timer);
-            setTimeout(getTime,500);
+            setTimeout(function(){
+                render();
+            },500);
 		}
 	}, 1000);
 	
@@ -118,7 +120,7 @@ function getUsers(){
                     }
                     userTable = userTable + '<tr><th>'+usr+'</th></tr>';
                     for(var i =0;i<userStore[usr].length;i++){
-                        userTable = userTable+ '<tr><td onClick="removePlayer('+i+')">'+userStore[usr][i].rank+')   '+userStore[usr][i].name+'</td></tr>';
+                        userTable = userTable+ '<tr><td onClick="removePlayer('+i+',\''+usr+'\')">'+userStore[usr][i].rank+')   '+userStore[usr][i].name+'</td></tr>';
                     }
                 });
                 document.getElementById('myPlayers').innerHTML = userTable;
@@ -127,7 +129,7 @@ function getUsers(){
                     userStore[selectedUser] = [];
                 }
                 for(var i =0;i<userStore[selectedUser].length;i++){
-                    userTable = userTable+ '<tr><td onClick="removePlayer('+i+')">'+userStore[selectedUser][i].rank+')   '+userStore[selectedUser][i].name+'</td></tr>';
+                    userTable = userTable+ '<tr><td>'+userStore[selectedUser][i].rank+')   '+userStore[selectedUser][i].name+'</td></tr>';
                 }
                 document.getElementById('myPlayers').innerHTML = '<tr><th>'+selectedUser+'</th></tr>' + userTable;
             }
@@ -145,23 +147,24 @@ function addPlayer(id){
             $.get('/startTimer/false',function(data){
                 console.log("SAVED");
             });
+        
+            userStore[selectedUser].push(playerList[id]);
+            playerList.splice(id,1);
+            save().then(()=>{
+                render();
+            });
         }
-        userStore[selectedUser].push(playerList[id]);
-        playerList.splice(id,1);
+    }
+}
+
+function removePlayer(id,usr){
+    if(selectedUser=='all'){
+        playerList.push(userStore[usr][id]);
+        userStore[usr].splice(id,1);
         save().then(()=>{
             render();
         });
     }
-}
-
-function removePlayer(id){ //Not Working
-    if(selectedUser=='all'){
-    playerList.push(userStore[selectedUser][id]);
-    userStore[selectedUser].splice(id,1);
-    save().then(()=>{
-        render();
-    });
-}
 }
 function lookUpUser(){
     var code = document.getElementById('code').value;
