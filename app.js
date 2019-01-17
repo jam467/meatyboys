@@ -17,6 +17,7 @@ var startTimer = require('./routes/timer');
 var getTimer = require('./routes/draftDay/getTimer');
 var setUsers = require('./routes/draftDay/setUsers');
 var getUsers = require('./routes/draftDay/getUsers');
+var getVisibleUser = require('./routes/draftDay/getVisibleUser');
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use('/getDraft', getDraft);
 app.use('/setDraft', setDraft);
 app.use('/getUsers', getUsers);
 app.use('/setUsers', setUsers);
+app.use('/getVisibleUser', getVisibleUser);
 app.use('/getTimer', getTimer);
 
 

@@ -1,62 +1,90 @@
 var express = require('express');
+var users = require('../playerfiles/userLogins');
 
 var router = express.Router();
 var fs = require('fs');
-var request = require('request');
 /* GET home page. */
-router.get('/:id', function(req, res, next) {
-    var users = [{code:'James123',usr:'James'},{code:'James123',usr:'Jonty'}];
+router.get('/:toChange', function(req, res, next) {
     res.send('success');
     //console.log(JSON.stringify(req));
     var start = new Date();
-    var noUsers = users.length;
     var currUser = users[0].usr;
-    var i =0;
-    fs.writeFile('playerfiles/time.txt', '{"time":'+JSON.stringify(start)+',"usr":'+JSON.stringify(currUser)+'}', function (err) {
-        //if (err) throw err;
-       console.log('Saved Rem');
-    });
-    if(req.body.toChange!=true){
+    var selectionTime = 90 * 1000;
+    var timeobj = {time:start,usr:currUser};
+    console.log("Start Timer is:" + req.params.toChange);
+    if(req.params.toChange=="start"){       
+        fs.writeFile('playerfiles/time.txt', JSON.stringify(timeobj), function (err) {
+            //if (err) throw err;
+        console.log('Saved start time');
+        });
         var x = setInterval(function(){
             
-            request('http://localhost/getTimer', function (error, response, body) {
-                start = response.body.time;
-                console.log(start);
-                currUser = response.usr;
-                if(((new Date())-start)>=90000){ 
-                    if(i>=(noUsers-1)){
-                        i=0;
-                    }else{
-                        i++;
-                    }
-                    currUser = users[i].usr;
-                    start = new Date();
-                    fs.writeFile('playerfiles/time.txt', '{"time":'+JSON.stringify(start)+',"usr":'+JSON.stringify(currUser)+'}', function (err) {
-                        //if (err) throw err;
-                        console.log('Saved time');
-                    });
-                    
-                }
+        getTimeData().then((body)=>{            
+            start = body.time;
+            currUser = body.usr;
+            if(((new Date())-(new Date(start)))>=selectionTime){ 
+                currUser = users[nextUser(currUser,users)].usr;
+                start = new Date();
+                timeobj = {time:start,usr:currUser};
+                setTimeDate(timeobj);
+                
+            }
          })
         },500);
-    }else{
-        if(i>=(noUsers-1)){
-            i=0;
-        }else{
-            i++;
-        }
-        currUser = users[i].usr;
-        start = new Date();
-        fs.writeFile('playerfiles/time.txt', '{"time":'+JSON.stringify(start)+',"usr":'+JSON.stringify(currUser)+'}', function (err) {
+    }else if(req.params.toChange=="false"){
+        getTimeData().then((body)=>{        
+            var user = body.usr;
+            start = new Date();
+            console.log("Changing to user: "+users[nextUser(user,users)].usr);
+            timeobj = {time:start,usr:(users[nextUser(user,users)].usr)}
+            setTimeDate(timeobj);
+        });
         
-            console.log('Saved time');
+    }else{
+        var timeout = Number(req.params.toChange);
+        getTimeData().then((body)=>{
+            var waitTill = new Date(body.time);
+            waitTill = waitTill.setTime(waitTill.getTime() + (timeout*1000*60));
+            waitTill = new Date(waitTill);
+            var UserNow = body.usr;
+            console.log("Adding time to user: "+UserNow);
+            timeobj = {time:waitTill,usr:UserNow}
+            setTimeDate(timeobj);
+
         });
     }
     
 
 	
 });
-
+function getTimeData(){
+    return new Promise((resolve,reject)=>{
+        fs.readFile('playerfiles/time.txt', function(err, data) {
+            resolve(JSON.parse(data));
+        });
+  
+    });
+}
+function setTimeDate(obj){
+    fs.writeFile('playerfiles/time.txt', JSON.stringify(obj), function (err) {
+        
+        console.log('Saved time');
+     });
+}
+function nextUser(user){
+    var userID = -1;
+    for(var i =0;i<users.length;i++ ){
+        if(users[i].usr==user){
+            userID = i;
+        }
+    }
+    if(userID>=(users.length-2)){//all user is at end
+        userID=0;
+    }else{
+        userID++;
+    }
+    return userID;
+}
 module.exports = router;
 
 

@@ -6,7 +6,9 @@ var fs = require('fs');
 router.get('/', function(req, res, next) {
   fs.readFile('playerfiles/time.txt', function(err, data) {
   		//console.log("james", JSON.parse(data),"James");
-  		res.send(JSON.parse(data));
+          console.log(JSON.parse(data).time);
+          res.send(JSON.parse(data));
+          
   	});
 
 	

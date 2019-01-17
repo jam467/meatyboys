@@ -1,9 +1,16 @@
-var selectedUser = 'James';//set this on input
+var selectedUser = 'NOONE';//set this on input
 var userStore = {};
 var playerList = [];
 var isActive = false;
+var killTimer = false;
+var selectionTime = 90 * 1000;
+let timer;
 render();
 function render(){
+    if(timer!=undefined){
+        clearInterval(timer);
+    }
+    clearInterval(timer);
     getDraft().then((players)=>{
         playerList = players;
         getUsers().then((users)=>{
@@ -24,9 +31,9 @@ function save(){
 }
 function countDownTimer(time,usr){
     var countDownDate = new Date(time);
-    countDownDate = countDownDate.setTime(countDownDate.getTime() + (90000));
+    countDownDate = countDownDate.setTime(countDownDate.getTime() + (selectionTime));
 	// Update the count down every 1 second
-	var x = setInterval(function() {
+	timer = setInterval(function() {
 		
 		// Get todays date and time
 		var now = new Date().getTime();
@@ -43,8 +50,9 @@ function countDownTimer(time,usr){
 		document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s " + "( " +usr+" ) ";
 
 		// If the count down is finished, write some text 
-		if (distance < 0) {
-			clearInterval(x);
+		if ((distance < 0)||(killTimer==true)) {
+            killTimer =false;
+            clearInterval(timer);
             setTimeout(getTime,500);
 		}
 	}, 1000);
@@ -55,6 +63,8 @@ function getTime(){
         $.get('/getTimer',function(data){
             if(selectedUser==data.usr){
                 isActive = true;
+            }else{
+                isActive = false;
             }
             countDownTimer(data.time,data.usr);
             resolve();
@@ -102,7 +112,16 @@ function getUsers(){
             console.log(userStore[selectedUser]);
             var userTable = '';
             if(selectedUser=='all'){
-
+                Object.keys(userStore).forEach(function(usr){
+                    if(userStore[usr]==undefined){
+                        userStore[usr] = [];
+                    }
+                    userTable = userTable + '<tr><th>'+usr+'</th></tr>';
+                    for(var i =0;i<userStore[usr].length;i++){
+                        userTable = userTable+ '<tr><td onClick="removePlayer('+i+')">'+userStore[usr][i].rank+')   '+userStore[usr][i].name+'</td></tr>';
+                    }
+                });
+                document.getElementById('myPlayers').innerHTML = userTable;
             }else{
                 if(userStore[selectedUser]==undefined){
                     userStore[selectedUser] = [];
@@ -110,28 +129,32 @@ function getUsers(){
                 for(var i =0;i<userStore[selectedUser].length;i++){
                     userTable = userTable+ '<tr><td onClick="removePlayer('+i+')">'+userStore[selectedUser][i].rank+')   '+userStore[selectedUser][i].name+'</td></tr>';
                 }
+                document.getElementById('myPlayers').innerHTML = '<tr><th>'+selectedUser+'</th></tr>' + userTable;
             }
                 
-            document.getElementById('myPlayers').innerHTML = '<tr><th>'+selectedUser+'</th></tr>' + userTable;
+            
             resolve(userStore);
         });
     });
 }
 
 function addPlayer(id){
-    if(selectedUser!=all){
-        $.post('/startTimer',{toChange:JSON.stringify(true)},function(data){
-            console.log("SAVED");
+    if(isActive){
+        clearInterval(timer);
+        if(selectedUser!='all'){
+            $.get('/startTimer/false',function(data){
+                console.log("SAVED");
+            });
+        }
+        userStore[selectedUser].push(playerList[id]);
+        playerList.splice(id,1);
+        save().then(()=>{
+            render();
         });
     }
-    userStore[selectedUser].push(playerList[id]);
-    playerList.splice(id,1);
-    save().then(()=>{
-        render();
-    });
 }
 
-function removePlayer(id){
+function removePlayer(id){ //Not Working
     if(selectedUser=='all'){
     playerList.push(userStore[selectedUser][id]);
     userStore[selectedUser].splice(id,1);
@@ -139,4 +162,13 @@ function removePlayer(id){
         render();
     });
 }
+}
+function lookUpUser(){
+    var code = document.getElementById('code').value;
+    document.getElementById('code').style.display = "none";
+    document.getElementById('codeButton').style.display = "none";
+    $.get('/getVisibleUser/'+code,function(data){
+        selectedUser = data;
+        render();
+    });
 }
