@@ -1,1 +1,1 @@
-{"James":[{"rank":1,"name":"Dan Mackensie"}],"Jonty":[{"rank":3,"name":"Folau"},{"rank":1,"name":"Bam Magkensie"},{"rank":2,"name":"Rob dasdasd"}]}
+{"BumbleBlues":[],"David Stocock":[{"rank":3,"name":"Israel Folau","position":"Outside Backs"}],"DraftBaron":[],"ESTMD HMS":[],"Marika Stockad":[],"NSWasps":[],"Rees Hodge":[{"rank":22,"name":"Emiliano Boffelli","position":"Outside Backs"}],"Tuis doinshoey":[],"Unbealevables":[{"rank":4,"name":"Solomon Alaimalo","position":"Outside Backs"}],"Funwolves":[{"rank":2,"name":"Richie Mo'unga","position":"Fly Half"}]}

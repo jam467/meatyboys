@@ -18,6 +18,7 @@ function render(){
     clearInterval(timer);
     getDraft().then((players)=>{
         playerList = players;
+        filterPlayers();
         getUsers().then((users)=>{
             userStore = users;
         });
@@ -94,21 +95,11 @@ function getTime(){
     })
 }
 
-
+var tableChoice = 'playerTable';
 function getDraft(){
     return new Promise((resolve,reject)=>{
         $.get('/getDraft',function(data){
-            var players = (data);
-            console.log(data);
-            var playerTable = '';
-            for(var i =0;i<players.length;i++){
-                playerTable = playerTable+ '<tr><td onClick="addPlayer('+i+')">'+players[i].rank+')   '+players[i].name+'</td></tr>';
-            }
-            var tableChoice = 'playerTable';
-            if(selectedUser=='all'){
-                tableChoice = 'playerTableAll';
-            }
-            document.getElementById(tableChoice).innerHTML = '<tr><th>Remaining Players</th></tr>' + playerTable;
+            players = data;
             resolve(players);
         });
     })
@@ -213,4 +204,20 @@ function lookUpUser(){
         selectedUser = data;
         render();
     });
+}
+
+function filterPlayers(){
+    var searchInput = document.getElementById('search').value;
+    var playerTable = '';
+    var players = playerList;
+    players.sort(function(a,b){return (a.rank-b.rank)})
+    for(var i =0;i<players.length;i++){
+        if(players[i].name.includes(searchInput)||players[i].position.includes(searchInput)){
+            playerTable = playerTable+ '<tr><td onClick="addPlayer('+i+')">'+players[i].rank+')   '+players[i].name+'   -   '+players[i].position+'</td></tr>';
+        }
+    }
+    if(selectedUser=='all'){
+        tableChoice = 'playerTableAll';
+    }
+    document.getElementById(tableChoice).innerHTML = '<tr><th>Remaining Players</th></tr>' + playerTable;
 }

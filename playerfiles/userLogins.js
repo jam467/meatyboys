@@ -1,3 +1,3 @@
-var users = [{code:'James123',usr:'James'},{code:'James4123',usr:'Jonty'},{code:"HACKIN",usr:'all'}];//all user must be at end
+var users = [{usr:'BumbleBlues',code:'fumbleblues'},{usr:'David Stocock',code:'oboe'},{usr:'DraftBaron',code:'adont'},{usr:'ESTMD HMS',code:'bonkin'},{usr:'Funwolves',code:'swerob'},{usr:'Marika Stockad',code:'bumty'},{usr:'NSWasps',code:'morboys'},{usr:'Rees Hodge',code:'bengowlah'},{usr:'Tuis doinshoey',code:'odoylerules'},{usr:'Unbealevables',code:'james123'},{code:"HACKIN",usr:'all'}];//all user must be at end
 
 module.exports = users;
