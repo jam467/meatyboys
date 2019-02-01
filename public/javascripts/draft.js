@@ -2,7 +2,7 @@ var selectedUser = 'NOONE';//set this on input
 var userStore = {};
 var playerList = [];
 var isActive = false;
-var selectionTime = 90 * 1000;
+var selectionTime = 92 * 1000;
 let timer;
 render();
 

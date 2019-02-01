@@ -9,7 +9,7 @@ router.get('/:toChange', function(req, res, next) {
     //console.log(JSON.stringify(req));
     var start = new Date();
     var currUser = users[0].usr;
-    var selectionTime = 90 * 1000;
+    var selectionTime = 92 * 1000;
     var timeobj = {time:start,usr:currUser,snake:"up"};
     console.log("Start Timer is:" + req.params.toChange);
     if(req.params.toChange=="start"){       
