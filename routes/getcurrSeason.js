@@ -5,10 +5,14 @@ var fs = require('fs');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  fs.readFile('downloads/squads.js', function(err, data) {
+	 fs.readFile('downloads/currentseason.json', function(err, data) {
   		//console.log("james", JSON.parse(data),"James");
   		res.send(JSON.parse(data));
   	});
+	
 });
 
 module.exports = router;
+
+
+

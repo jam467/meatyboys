@@ -5,7 +5,7 @@ var fs = require('fs');
 
 /* GET users listing. */
 router.get('/:round', function(req, res, next) {
-   fs.readFile('downloads/players'+req.params.round+'.json', function(err, data) {
+  fs.readFile('downloads/scoreboard'+req.params.round+'.json', function(err, data) {
 		  //console.log("james", JSON.parse(data),"James");
 		  if(err){
 			res.send();

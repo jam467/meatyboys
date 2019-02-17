@@ -1,75 +1,67 @@
-    var moneyOn = 0;
-	var firstHome = '';
-	var firstAway = '';
-	var fHomeId = '';
-	var fAwayId = '';
-	var cAwayId = '';
-	var cHomeId = '';
-	var currHome = '';
-	var currAway = '';
-	var gRound = 0;
+
+	var gRound = 1;
+	var Round = [];
 	var users = [];
-	var squads = [];
-	var players = [];
-	var rounds = [];
 	var draftData = [];
-	var match = 0;
 	var sortBy =0;
-	var fox = 0;
-    var nameLength = 12;
+	var nameLength = 12;
+	var matchNo = 0;
 	var roundFirstLoad =0;
 	$( document ).ready(function() {
-		$.get('/getSquads',function(data){
-				//console.log(data)
-				squads = (data);
-				getRounds();
+		$.get('/getRound',function(roundD){
+			gRound = roundD.round;
+			$.get('/getScoreboard/'+gRound,function(data){
+				for(var i=0;i<data.length;i++){
+					if(data[i].is_match_running="true"){
+						matchNo=i;
+						i= data.length;
+					}
+				}
+				getRound();
+				listRounds(gRound);//set to latest round
+			});
 		});
-		listRounds(17);
-		var byeDropList = document.getElementById("navBar").innerHTML;
 	});
-    
-	function getRounds(){
-		rounds = []
-		$.get('/getRounds',function(data){
-			//console.log(data);
-			rounds = data;
-			if(roundFirstLoad==0){
-				roundsThisWeek();
-			}
-			getPlayers();
-		});
-	}
-	
-	function getPlayers(){
-		 var d = new Date();
-		//document.getElementById("timestamp").innerHTML = d.toLocaleTimeString();
-		users = [];
-		players = [];
-		$.get('/getPlayers',function(data){
-			players = (data);
-			//console.log(data);
-			players = data;
-			getDraft();	
-		});
-		
-	}
-	function getDraft(){
-		$.post('/getDraft',{"round":(gRound+1)},function(data){
+    function getRound(){
+		$.get('/getPlayers/'+gRound,function(data){
 			//console.log(data)
-			draftData = (data);
-			if(roundFirstLoad==0){
-				fillData(gRound,fHomeId,firstHome,fAwayId,firstAway,match);
-				roundFirstLoad++;
-			}else{
-				console.log(gRound,cHomeId,currHome,cAwayId,currAway);
-				fillData(gRound,cHomeId,currHome,cAwayId,currAway,match);
-			}
-		});		
+			Round = (data);
+			getDraft().then(()=>{
+				roundsThisWeek();
+				getCurrentSeason();
+				fillData();
+			});
+		});
+	}
+	function refreshData(){
+		getDraft().then(()=>{
+			fillData();
+		});
+	}
+	function getCurrentSeason(){
+		return new Promise((resolve,reject)=>{
+			$.get('/getcurrSeason',function(data){
+				//console.log(data)
+				resolve(data);
+			});
+		})
+	}
+
+	
+	function getDraft(){
+		return new Promise((resolve,reject)=>{
+
+			$.post('/getDraft',{"round":(gRound)},function(data){
+				//console.log(data)
+				draftData = (data);
+				resolve();
+			});		
+		});
 	}
 	function listRounds(noRounds){
     	var roundList = '';
         for(var i=0;i<noRounds;i++){
-            roundList = roundList + '<li><a href="javascript:;" onclick="setRound('+(i)+')" id="priceChanges" data-toggle="collapse" data-target=".navbar-collapse.in" >Round '+(i+1)+'</a></li>'
+            roundList = roundList + '<li><a href="javascript:;" onclick="setRound('+(i+1)+')" id="priceChanges" data-toggle="collapse" data-target=".navbar-collapse.in" >Round '+(i+1)+'</a></li>'
         }
         document.getElementById("roundList").innerHTML = roundList;
     }
@@ -83,22 +75,11 @@
 			sortBy = 0;
 			button.firstChild.data = "Sort by Position";
 		}
-		fillData(gRound,cHomeId,currHome,cAwayId,currAway,match);
-	}
-	function toggleFox(){
-		var button = document.getElementById("foxsport");
-		if(fox==0){
-			fox = 1;
-			button.firstChild.data = "Draft Scores";
-		}else{
-			fox = 0;
-			button.firstChild.data = "Foxsports Scores";
-		}
-		fillData(gRound,cHomeId,currHome,cAwayId,currAway,match);
+		fillData();
 	}
 	
 	
-	var timer = setInterval(getRounds, 30000);
+	var timer = setInterval(refreshData, 30000);
 	
 
 	var loadedOnce =0;
@@ -115,93 +96,47 @@
 		}
 		if((screen.width<1700)&&(screen.width>992)){
 			var zoomCalc = (screen.width-992)/(1700-992)*.5+.5;
-			console.log(zoomCalc);U	
+			console.log(zoomCalc);
                             document.getElementById("navZoom").style.zoom=zoomCalc;
 		}
 	}
     function setRound(round){
         gRound = round;
-        getDraft();
-        roundsThisWeek(1);
-        fillData(gRound,fHomeId,firstHome,fAwayId,firstAway);
+        getRound();
     }
-	function getScore(home,away){
-
-		var scores ={};
-		for(var i=0;i<rounds[gRound].matches.length;i++){
-			if((rounds[gRound].matches[i].home_squad_id==home)&&(rounds[gRound].matches[i].away_squad_id==away)){
-				scores.home=rounds[gRound].matches[i].home_score;
-				scores.away=rounds[gRound].matches[i].away_score;
-				if(scores.home==null){
-					scores.home = '';
-				}
-				if(scores.away==null){
-		                                scores.away = '';
-		                        }
-
-
-
-			}
-		}
-		console.log(scores.home);
-		return scores;
+	function getScore(){
+		$.get('/getScoreboard/'+gRound,function(data){
+			document.getElementById("scoreHome").innerHTML=" "+data[matchNo].team_A.score;
+			document.getElementById("scoreAway").innerHTML=data[matchNo].team_B.score;
+			
+		});
 	}
 
 
-	function fillData(roundNum,home,homeName,away,awayName,matchNo){
-		var scores = getScore(home,away);
-		match = matchNo;
-		document.getElementById("round").innerHTML= "Round "+ (gRound+1)+'<span class="caret"></span>';
-		document.getElementById("homeT").innerHTML=homeName+'<span id="homeVal"></span> <span id="scoreHome">'+scores.home+'</span>';
-		document.getElementById("awayT").innerHTML='<span id="scoreAway">'+scores.away+'</span> '+awayName+'<span id="awayVal"></span>';
-		cAwayId = away;
-		cHomeId = home;
-		currHome = homeName;
-		currAway = awayName;
+	function fillData(){
+		var homeName = Round[matchNo].team_A.name;
+		var awayName = Round[matchNo].team_B.name;
+		document.getElementById("round").innerHTML= "Round "+ (gRound)+'<span class="caret"></span>';
+		document.getElementById("homeT").innerHTML=homeName+'<span id="scoreHome"></span>';
+		document.getElementById("awayT").innerHTML='<span id="scoreAway"></span> '+awayName;
+		getScore();
 		var team1 = [];
 		var team2 = [];
 		var table = document.getElementById("playerTable");
 		var list = "";
 		var team1Name = homeName;
 		var team2Name = awayName;
-		var team1Id = home;
-		var team2Id = away;
-		var round = roundNum+1;
+		var round = gRound;
 		//Draft player name
 		for (var i =0;i<draftData.length;i++){
-		
-			// Matching Names
-			if((draftData[i].team == team1Name)||(draftData[i].team == team2Name)){
-				for(var k =0;k<players.length;k++){
-					dListNo = -1;
-					//console.log((players[i].first_name+" "+players[i].last_name),draftData[k].playerName);
-					if((players[k].first_name+" "+players[k].last_name)==draftData[i].playerName){
-						dListNo = k;
-						k = players.length;
-					}
-					if(dListNo==-1){
-						dListNo = 0;
-					}
-				}
-				if(dListNo ==0){
-					console.log(draftData[i].playerName);
-				}
-			}
-			if(draftData[i].team == team1Name){
+			if(draftData[i].team == team1Name.substring(0,3).toUpperCase()){
 				
 				var posDetails =  getPos(draftData[i].position);
 					
 			
 				var t1Score = 0;
-				
-				if(fox==0){
 					t1Score = draftData[i].score;
-				}else{
-					t1Score = players[dListNo].stats.scores[round];
-					if (t1Score == undefined){
-						t1Score = 0;
-					}
-				}
+				
 					
 				var ownerName = "";
 				if((draftData[i].userName != "Free Agent")&&(draftData[i].userName.slice(0,7)!="WAIVERS")){
@@ -211,28 +146,18 @@
 					name:draftData[i].playerName,
 					owner:ownerName,
 					score:t1Score,
-					playerId:players[dListNo].id,
 					position:posDetails.posNum,
 					posName: posDetails.posName,
-					priceP: getPricePoint(players[dListNo]),
-      				value:players[dListNo].stats.prices[round],
-					img: '<img height="71.14" width="56.92" src="http://dsj3fya52lhzn.cloudfront.net/media/fox_super_rugby/players/'+players[dListNo].id+'.png" alt="'+draftData[i].playerName+'">'
-				});
-			}else if(draftData[i].team == team2Name){
-				var ownerList2 = "";
+					img: ''
+					});
+			}else if(draftData[i].team == team2Name.substring(0,3).toUpperCase()){
 				var posDetails =  getPos(draftData[i].position);
 				
 				
 				
 				var t2Score = 0;
-				if(fox==0){
 					t2Score = draftData[i].score;
-				}else{
-					t2Score = players[dListNo].stats.scores[round];
-					if (t2Score == undefined){
-						t2Score = 0;
-					}
-				}
+			
 				
 				var ownerName = "";
 				if((draftData[i].userName != "Free Agent")&&(draftData[i].userName.slice(0,7)!="WAIVERS")){
@@ -242,18 +167,13 @@
 					name:draftData[i].playerName,
 					owner:ownerName,
 					score:t2Score,
-					playerId:players[dListNo].id,
 					position:posDetails.posNum,
 					posName: posDetails.posName,
-					value:players[dListNo].stats.prices[round],
-					priceP:getPricePoint(players[dListNo]),
-					img: '<img height="71.14" width="56.92" src="http://dsj3fya52lhzn.cloudfront.net/media/fox_super_rugby/players/'+players[dListNo].id+'.png" alt="'+draftData[i].playerName+'">'
-					
+					img: ''
 				});
 			}
 			
 		}
-		console.log(team1);
 		var blankObj = {
 						name:'',
 						score:'',
@@ -273,10 +193,6 @@
 			team1.sort(function(a, b){return b.score-a.score});
 			team2.sort(function(a, b){return b.score-a.score});
 		}
-		var team1Value = getTeamValue(team1).toLocaleString();
-  		var team2Value = getTeamValue(team2).toLocaleString();
-  		document.getElementById("homeVal").innerHTML=' ($'+team1Value+')';
-		document.getElementById("awayVal").innerHTML=' ($'+team2Value+')';
 		if(team1.length<team2.length){
 			diff = team2.length - team1.length;
 			for(var l =0;l<diff;l++){
@@ -289,7 +205,6 @@
 			}
 		}
         
-		console.log(team1.length,team2.length);
 		for(var i=0;i<team1.length;i++){
 			list = list + '<tr class="myRow">\
 			<td width="5%" style="background-color:'+lColor+'">\
@@ -305,7 +220,6 @@
 			<td width="31%" style="background-color:'+lColor+'">\
 			<div class="rName">\
 			'+team1[i].name+'\
-			<span id="playH'+i+'">($'+team1[i].priceP+'/pt)</span>\
 			</div>\
 			</td>\
 			<td width="5%" class="rImg" style="background-color:'+lColor+'">\
@@ -331,7 +245,6 @@
 			<td width="31%" style="background-color:'+rColor+'">\
 			<div class="rName">\
 			'+team2[i].name+'\
-			<span id="playA'+i+'">($'+team2[i].priceP+'/pt)</span>\
 			</div>\
 			</td>\
 			<td width="5%"style="background-color:'+rColor+'">\
@@ -346,81 +259,11 @@
 			</td>\
 		</tr>'}
 		document.getElementById("loader").style.display="none";
-		var teamValString = '<br>\
-				<span class="tValh">'+team1Value+'</span>\
-				<span>VS</span>\
-				<span class="tVala">'+team2Value+'</span>';
 				
         table.innerHTML =  list;
 		setZoom();
-		showMoney(1);
 	}
-	function getTeamValue(team){
-		var teamVal = 0;
-		for(var i =0;i<team.length;i++){
-		    teamVal = teamVal+team[i].value;
-		}
-		return teamVal;
 
-	}
-	function getPricePoint(player){
-	  var PP = (player.stats.prices[gRound+1]/player.stats.scores[gRound+1]);
-	  if((isNaN(PP))||(PP==undefined)){
-		PP="";
-	  }
-	  if(PP>=1000){
-		PP = (PP/1000).toFixed(0)+"k";
-	  }
-	  return PP;
-	  
-	}
-	function showMoney(fromLoad){
-	  if(fromLoad!=1){
-		if(moneyOn==0){
-		  moneyOn=1;
-		}else{
-		  moneyOn=0;
-		}
-	  }
-	  if(moneyOn==0){
-		document.getElementById("homeVal").style.display="none";
-		document.getElementById("awayVal").style.display="none";
-		for(var i=0;i<40;i++){
-		  if((document.getElementById("playH"+i))!=undefined){
-		    document.getElementById("playH"+i).style.display="none";
-		  }
-		  if((document.getElementById("playA"+i))!=undefined){
-		    document.getElementById("playA"+i).style.display="none";
-		  }
-		}
-	  }else{
-		document.getElementById("homeVal").style.display="inline";
-		document.getElementById("awayVal").style.display="inline";
-		for(var i=0;i<40;i++){
-		  if((document.getElementById("playH"+i))!=undefined){
-		    document.getElementById("playH"+i).style.display="inline";
-		  }
-		  if((document.getElementById("playA"+i))!=undefined){
-		    document.getElementById("playA"+i).style.display="inline";
-		  }
-		}
-	  }
-	}
-	
-	function updateByMatch(matchNo){
-	  console.log(matchNo);
-	  for(var i=0;i<squads.length;i++){
-	  if(rounds[gRound].matches[matchNo].away_squad_id==squads[i].id){
-					awayTeam = squads[i].name;
-					awayId = squads[i].id;
-	  }
-		if(rounds[gRound].matches[matchNo].home_squad_id==squads[i].id){
-					homeTeam = squads[i].name;
-					homeId = squads[i].id;
-		}
-	  }
-	  fillData(gRound,homeId,homeTeam,awayId,awayTeam,matchNo);
-	}
 	 $(function() {
   //Enable swiping...
   $("#dashSpace").swipe( {
@@ -429,14 +272,14 @@
       //$(this).text("You swiped " + direction );
       
       if(direction=="right"){
-        if(match>0){
-          match = match - 1;
-          updateByMatch(match);
+        if(matchNo>0){
+          matchNo = matchNo - 1;
+		  fillData();
         }
       }else if(direction=="left"){
-        if(match<(rounds[gRound].matches.length-1)){
-          match= match + 1;
-          updateByMatch(match);
+        if(matchNo<(Round.length-1)){
+          matchNo= matchNo + 1;
+          fillData();
         }
       }
     },
@@ -445,85 +288,46 @@
     allowPageScroll:"vertical"
   });
 });
-function roundsThisWeek(changeRound){
-	var found = 0;
-	var round = 0;
-	if(changeRound==null){
-		for(var i=0;i<rounds.length;i++){
-			if(((rounds[i].status=="scheduled")||(rounds[i].status=="active"))&&(found!=1)){
-				round = i;
-				found = 1;
-			}
-		}
-	}else{
-		round = gRound;
-	}
-	var navBar = '';
-	var homeTeam = '';
-	var awayTeam = '';
-	var hfound = 0;
-	var afound = 0;
-	var matchNow = 0;
-	var noBye = [];
-	var matchOn = 0;
+function roundsThisWeek(){
+		var navBar = '';
+		var teams = [];
+		for(var i=0;i<Round.length;i++){
+			var homeTeam = Round[i].team_A.name;
+			var awayTeam = Round[i].team_B.name;
+			teams.push(homeTeam);
+			teams.push(awayTeam);
+			navBar = navBar + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="javascript:;" onClick="changeMatch('+i+')">'+homeTeam+' v '+awayTeam+'</a></li>';
 
-	for(var j=0;j<rounds[round].matches.length;j++){
-		for(var k=0;k<squads.length;k++){
-			if(rounds[round].matches[j].home_squad_id==squads[k].id){
-				homeTeam = squads[k].name;
-				homeId = squads[k].id;
-				if(hfound!=1){
-					firstHome = homeTeam;
-					matchOn = j;
+		}
+		
+		document.getElementById("games").innerHTML = navBar;
+	getCurrentSeason().then((currD)=>{
+		var byes = '';
+		for(var j=0;j<currD.teams.length;j++){
+			var found =0;
+			var team = '';
+			for(var i=0;i<teams.length;i++){
+				if(teams[i]==currD.teams[j].name){
+					found = 1;
+
 				}
-				hfound = 1;
-				noBye.push(homeTeam);
 			}
-			if(rounds[round].matches[j].away_squad_id==squads[k].id){
-				awayTeam = squads[k].name;
-				awayId = squads[k].id;
-				if(afound!=1){
-					firstAway = awayTeam;
-				}
-				afound = 1;
-				noBye.push(awayTeam);
+			if(found==0){
+				byes = byes + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="javascript:;" >'+currD.teams[j].name+'</a></li>';
 			}
+			found =0;
 		}
-		navBar = navBar + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="javascript:;" onClick="fillData('+round+',\''+homeId+'\',\''+homeTeam+'\',\''+awayId+'\',\''+awayTeam+'\',\''+j+'\')">'+homeTeam+' v '+awayTeam+'</a></li>';
-		var today = new Date();
-		var matchTime = new Date(rounds[round].matches[j].date);
-		if(matchNow==0){
-			if(today<matchTime.setHours(matchTime.getHours()+2)){
-				firstAway = awayTeam;
-				firstHome = homeTeam;
-				matchOn = j;
-				match = j;
-				matchNow += 1;
-				console.log(matchNow);
-			}
-		}
-	}
-	document.getElementById("games").innerHTML = navBar;
-	gRound = round;
-	fAwayId = rounds[round].matches[matchOn].away_squad_id;
-	fHomeId = rounds[round].matches[matchOn].home_squad_id;
-	//find byes
-	var byes = "";
-	for(var k=0;k<squads.length;k++){
-		var fNoBye = 0;
-		for(var j=0;j<noBye.length;j++){
-			if(noBye[j]==squads[k].name){
-				fNoBye = 1;
-			}
-		}
-		if(fNoBye==0){
-			byes = byes + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in">'+squads[k].name+'</a></li>';
-		}
-	}
-	document.getElementById("byes").innerHTML=byes;
+		document.getElementById("byes").innerHTML=byes;
+
+	})
+}
+function changeMatch(match){
+	matchNo = match;
+	fillData();
 }
 	
     function chooseColour(team){
+		var colour = ''
         switch(team){
 			case "Stormers":
 				colour = "#005596"
@@ -592,7 +396,7 @@ function roundsThisWeek(changeRound){
 				posName = "FRW";
 				posNum = 0;
 				break;
-			case "Locks":
+			case "Lock":
 				posName = "LOC";
 				posNum = 1;
 				break;
@@ -608,11 +412,11 @@ function roundsThisWeek(changeRound){
 				posName = "FLH";
 				posNum = 4;
 				break;
-			case "Midfielders":
+			case "Midfielder":
 				posName = "CTR";
 				posNum = 5;
 				break;
-			case "Outside Backs":
+			case "Outside Back":
 				posName = "OBK";
 				posNum = 6;
 				break;

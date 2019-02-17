@@ -6,11 +6,15 @@ var fs = require('fs');
 
 router.post('/', function(req, res, next) {
 	var roundNo = req.body["round"];
-	console.log('downloads/draft'+roundNo+'.js');
-	var file = 'downloads/draft'+roundNo+'.js';
+	console.log('downloads/draft'+roundNo+'.json');
+	var file = 'downloads/draft'+roundNo+'.json';
   	fs.readFile(file, function(err, data) {
-  		//console.log("james", JSON.parse(data),"James");
-  		res.send(JSON.parse(data));
+		  //console.log("james", JSON.parse(data),"James");
+		  if(err){
+			  res.send();
+		  }else{
+		  res.send(JSON.parse(data));
+		  }
   		
   		
   	});

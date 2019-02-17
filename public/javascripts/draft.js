@@ -98,7 +98,7 @@ function getTime(){
 var tableChoice = 'playerTable';
 function getDraft(){
     return new Promise((resolve,reject)=>{
-        $.get('/getDraft',function(data){
+        $.get('/getRemaining',function(data){
             players = data;
             resolve(players);
         });
