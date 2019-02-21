@@ -1,6 +1,6 @@
-*/3 * * * 4,5,6,0,1 ~/.nvm/versions/node/v9.5.0/bin/node /home/ubuntu/meatyboys/saveScripts/saveDraft.js
-0 0 * * 4,5,6,0,1 ~/.nvm/versions/node/v9.5.0/bin/node /home/ubuntu/meatyboys/saveScripts/saveRound.js
-0 0 * * 4,5,6,0,1 ~/.nvm/versions/node/v9.5.0/bin/node /home/ubuntu/meatyboys/saveScripts/savePlayers.js
-*/3 * * * 4,5,6,0,1 ~/.nvm/versions/node/v9.5.0/bin/node /home/ubuntu/meatyboys/saveScripts/saveScoreboard.js
-0 0 * * 4,5,6,0,1 ~/.nvm/versions/node/v9.5.0/bin/node /home/ubuntu/meatyboys/saveScripts/savecurrentSeason.js
-0 17 * * * ~/.nvm/versions/node/v9.5.0/bin/node /home/ubuntu/meatyboys/saveScripts/getCookie.js
+*/3 * * * 4,5,6,0,1 /usr/bin/node /home/ubuntu/meatyboys/saveScripts/saveDraft.js
+0 0 * * 4,5,6,0,1 /usr/bin/node /home/ubuntu/meatyboys/saveScripts/saveRound.js
+0 0 * * 4,5,6,0,1 /usr/bin/node /home/ubuntu/meatyboys/saveScripts/savePlayers.js
+*/3 * * * 4,5,6,0,1 /usr/bin/node /home/ubuntu/meatyboys/saveScripts/saveScoreboard.js
+0 0 * * 4,5,6,0,1 /usr/bin/node /home/ubuntu/meatyboys/saveScripts/savecurrentSeason.js
+0 17 * * * /usr/bin/node /home/ubuntu/meatyboys/saveScripts/getCookie.js
