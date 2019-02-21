@@ -10,9 +10,10 @@
 	$( document ).ready(function() {
 		$.get('/getRound',function(roundD){
 			gRound = roundD.round;
+			matchNo = roundD.nextGame;
 			$.get('/getScoreboard/'+gRound,function(data){
 				for(var i=0;i<data.length;i++){
-					if(data[i].is_match_running="true"){
+					if(data[i].is_match_running==true){
 						matchNo=i;
 						i= data.length;
 					}
@@ -303,17 +304,17 @@ function roundsThisWeek(){
 		document.getElementById("games").innerHTML = navBar;
 	getCurrentSeason().then((currD)=>{
 		var byes = '';
-		for(var j=0;j<currD.teams.length;j++){
+		for(var j=0;j<currD.current_season.teams.length;j++){
 			var found =0;
 			var team = '';
 			for(var i=0;i<teams.length;i++){
-				if(teams[i]==currD.teams[j].name){
+				if(teams[i]==currD.current_season.teams[j].name){
 					found = 1;
 
 				}
 			}
 			if(found==0){
-				byes = byes + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="javascript:;" >'+currD.teams[j].name+'</a></li>';
+				byes = byes + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="javascript:;" >'+currD.current_season.teams[j].name+'</a></li>';
 			}
 			found =0;
 		}
