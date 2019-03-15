@@ -1,5 +1,5 @@
 
 
-var loc = '/Users/georgiecondos/meatyboys/';
+var loc = '/home/ubuntu/meatyboys/';
 
 module.exports = loc;
