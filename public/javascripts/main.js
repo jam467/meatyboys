@@ -10,7 +10,6 @@
 	$( document ).ready(function() {
 		$.get('/getRound',function(roundD){
 			gRound = roundD.round;
-			matchNo = roundD.nextGame;
 			$.get('/getScoreboard/'+gRound,function(data){
 				for(var i=0;i<data.length;i++){
 					if(data[i].is_match_running==true){
