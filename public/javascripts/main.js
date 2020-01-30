@@ -234,7 +234,7 @@ function fillData() {
 			</td>\
 			<td width="31%" style="background-color:'+ lColor + '">\
 			<div class="rName">\
-			'+ team1[i].name + '<i class="'+team1[i].status+'"></i>\
+			'+ team1[i].name + '<i style="font-size:20px" class="'+team1[i].status+'"></i>\
 			</div>\
 			</td>\
 			<td width="5%" class="rImg" style="background-color:'+ lColor + '">\
@@ -259,7 +259,7 @@ function fillData() {
 			</td>\
 			<td width="31%" style="background-color:'+ rColor + '">\
 			<div class="rName">\
-			'+ team2[i].name + '<i class="'+team2[i].status+'"></i>\
+			'+ team2[i].name + '<i style="font-size:20px" class="'+team2[i].status+'"></i>\
 			</div>\
 			</td>\
 			<td width="5%"style="background-color:'+ rColor + '">\
