@@ -18,7 +18,7 @@ fs.readFile(loc+'downloads/round.json', function(err, data) {
 					var roundText = roundObj.number;
 					
 				}
-				playAr.push(players('SRU2019'+roundText+'0'+i).then((result)=>{
+				playAr.push(players('SRU2020'+roundText+'0'+i).then((result)=>{
 					return result;
 				}));
 			}
