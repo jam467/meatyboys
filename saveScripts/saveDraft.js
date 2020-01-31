@@ -44,7 +44,7 @@ function getPage(pageNo, cookie, round,playing) {
 		},
 		json: true,
 		url: 'http://www.fantasyrugbydraft.com/Web/Services/Action.asmx/Request',
-		body: { "Data": '{"filter":"","leagueid":"17ad5b99-b738-4b2c-93c8-ab260167f609","gameweek":' + round + ',"category":"10007","seasons":"85aaed54-2ee5-4e3f-b756-aac600e989d0","owner":"256","position":256,"teamnews":"256","sort":"","pageno":' + pageNo + ',"action":"member/league/playerhub","type":"control"}' }
+		body: { "Data": '{"filter":"","leagueid":"17ad5b99-b738-4b2c-93c8-ab260167f609","gameweek":' + round + ',"category":"255","seasons":"85aaed54-2ee5-4e3f-b756-aac600e989d0","owner":"256","position":256,"teamnews":"256","sort":"","pageno":' + pageNo + ',"action":"member/league/playerhub","type":"control"}' }
 	},
 		function (error, response, body) {
 			var Content = JSON.parse(body.d)["Content"];
