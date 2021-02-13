@@ -3,7 +3,7 @@ var fs = require('fs');
 var loc = require('./saveLocation');
 fs.readFile(loc+'downloads/round.json', function(err, data) {
 	//console.log("james", JSON.parse(data),"James");
-	var round = JSON.parse(data).round;
+	var round = JSON.parse(data).official.number;
 	request({
 		gzip: true,
 		json:true,

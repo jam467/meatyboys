@@ -4,8 +4,16 @@ var loc = require('./saveLocation');
 
 fs.readFile(loc+'downloads/currentseason.json', function(err,data){
 	var data = JSON.parse(data);
-	var round = data.current_season.current_round_number;
-		fs.writeFile(loc+'downloads/round.json', JSON.stringify({"round":round,"nextGame":1}), function (err) {
+	var round = 0;
+	var ofRound = {};
+	for(var i =0;i<data.length;i++){
+		if(data[i].match_end_date<(new Date().toISOString())){
+			round = i;
+			
+		}
+		ofRound = data[round].round;
+	}
+		fs.writeFile(loc+'downloads/round.json', JSON.stringify({"round":round,"official":ofRound}), function (err) {
   						//if (err) throw err;
  						console.log('Saved!');
 					});

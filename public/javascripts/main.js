@@ -4,35 +4,36 @@ var Round = [];
 var users = [];
 var draftData = [];
 var sortBy = 0;
+var currData = [];
 var nameLength = 12;
 var matchNo = 0;
 var roundFirstLoad = 0;
 $(document).ready(function () {
 	$.get('/getRound', function (roundD) {
-		gRound = roundD.round;
-		$.get('/getScoreboard/' + gRound, function (data) {
-			for (var i = 0; i < data.length; i++) {
-				if (data[i].is_match_running == true) {
-					matchNo = i;
-					i = data.length;
-				}
-			}
-			getRound();
-			listRounds(gRound);//set to latest round
-		});
+		gRound = { draft: roundD.round, official: (roundD.official ? roundD.official.number ? roundD.official.number : 0 : 0) };
+
+		listRounds(11);//set to latest round
+		getCurrentSeason().then((currD) => {
+			currData = currD;
+			getDraft().then(() => {
+				roundsThisWeek();
+				fillData();
+			});
+
+		})
 	});
 });
-function getRound() {
-	$.get('/getPlayers/' + gRound, function (data) {
-		//console.log(data)
-		Round = (data);
-		getDraft().then(() => {
-			roundsThisWeek();
-			getCurrentSeason();
-			fillData();
-		});
-	});
-}
+// function getRound() {
+// 	$.get('/getPlayers/' + gRound.official, function (data) {
+// 		//console.log(data)
+// 		Round = (data);
+// 		getDraft().then(() => {
+// 			roundsThisWeek();
+// 			getCurrentSeason();
+// 			fillData();
+// 		});
+// 	});
+// }
 function refreshData() {
 	getDraft().then(() => {
 		fillData();
@@ -51,7 +52,7 @@ function getCurrentSeason() {
 function getDraft() {
 	return new Promise((resolve, reject) => {
 
-		$.post('/getDraft', { "round": (gRound) }, function (data) {
+		$.post('/getDraft', { "round": (findDraftRound(gRound.draft)) }, function (data) {
 			//console.log(data)
 			draftData = (data);
 			resolve();
@@ -61,7 +62,7 @@ function getDraft() {
 function listRounds(noRounds) {
 	var roundList = '';
 	for (var i = 0; i < noRounds; i++) {
-		roundList = roundList + '<li><a href="javascript:;" onclick="setRound(' + (i + 1) + ')" id="priceChanges" data-toggle="collapse" data-target=".navbar-collapse.in" >Round ' + (i + 1) + '</a></li>'
+		roundList = roundList + '<li><a href="javascript:;" onclick="setRound(' + findGameForRound((i)) + ')" id="priceChanges" data-toggle="collapse" data-target=".navbar-collapse.in" >Round ' + (i + 1) + '</a></li>'
 	}
 	document.getElementById("roundList").innerHTML = roundList;
 }
@@ -101,22 +102,23 @@ function setZoom() {
 	}
 }
 function setRound(round) {
-	gRound = round;
-	getRound();
+	changeMatch(round)
 }
 function getScore() {
-	$.get('/getScoreboard/' + gRound, function (data) {
-		document.getElementById("scoreHome").innerHTML = " " + data[matchNo].team_A.score;
-		document.getElementById("scoreAway").innerHTML = data[matchNo].team_B.score;
-
-	});
+	document.getElementById("scoreHome").innerHTML = " " + currData[gRound.draft].team_A.score;
+	document.getElementById("scoreAway").innerHTML = currData[gRound.draft].team_B.score;
 }
 
-
+function nameSwap(name){
+	if(name==='Western Force'){
+		return 'Force';
+	}
+	return name;
+}
 function fillData() {
-	var homeName = Round[matchNo].team_A.name;
-	var awayName = Round[matchNo].team_B.name;
-	document.getElementById("round").innerHTML = "Round " + (gRound) + '<span class="caret"></span>';
+	var homeName = nameSwap(currData[gRound.draft].team_A.name);
+	var awayName = nameSwap(currData[gRound.draft].team_B.name);
+	document.getElementById("round").innerHTML = "Round " + (findDraftRound(gRound.draft)) + '<span class="caret"></span>';
 	document.getElementById("homeT").innerHTML = homeName + '<span id="scoreHome"></span>';
 	document.getElementById("awayT").innerHTML = '<span id="scoreAway"></span> ' + awayName;
 	getScore();
@@ -124,9 +126,8 @@ function fillData() {
 	var team2 = [];
 	var table = document.getElementById("playerTable");
 	var list = "";
-	var team1Name = homeName;
-	var team2Name = awayName;
-	var round = gRound;
+	var team1Name = (homeName);
+	var team2Name = (awayName);
 	//Draft player name
 	for (var i = 0; i < draftData.length; i++) {
 		if (draftData[i].team == team1Name) {
@@ -155,7 +156,7 @@ function fillData() {
 				position: posDetails.posNum,
 				posName: posDetails.posName,
 				img: '',
-				status: ((draftData[i].teamNews==='Starting')?'fas fa-star':(draftData[i].teamNews==='Bench')?'fas fa-star-half-alt':(draftData[i].teamNews==='Out')?'far fa-star':'')
+				status: ((draftData[i].teamNews === 'Starting') ? 'fas fa-star' : (draftData[i].teamNews === 'Bench') ? 'fas fa-star-half-alt' : (draftData[i].teamNews === 'Out') ? 'far fa-star' : '')
 			});
 		} else if (draftData[i].team == team2Name) {
 			var posDetails = getPos(draftData[i].position);
@@ -175,7 +176,6 @@ function fillData() {
 
 				}
 			}
-			console.log(draftData[i].teamNews);
 			team2.push({
 				name: draftData[i].playerName,
 				owner: ownerName,
@@ -183,9 +183,8 @@ function fillData() {
 				position: posDetails.posNum,
 				posName: posDetails.posName,
 				img: '',
-				status: ((draftData[i].teamNews==='Starting')?'fas fa-star':(draftData[i].teamNews==='Bench')?'fas fa-star-half-alt':(draftData[i].teamNews==='Out')?'far fa-star':'')
+				status: ((draftData[i].teamNews === 'Starting') ? 'fas fa-star' : (draftData[i].teamNews === 'Bench') ? 'fas fa-star-half-alt' : (draftData[i].teamNews === 'Out') ? 'far fa-star' : '')
 			});
-			console.log(team2[team2.length-1]);
 		}
 
 	}
@@ -198,8 +197,8 @@ function fillData() {
 		owner: '',
 		img: ''
 	}
-	var lColor = chooseColour(homeName);
-	var rColor = chooseColour(awayName);
+	var lColor = chooseColour(team1Name);
+	var rColor = chooseColour(team2Name);
 	var diff = 0;
 	if (sortBy == 1) {
 		team1.sort(function (a, b) { return a.position - b.position });
@@ -234,7 +233,7 @@ function fillData() {
 			</td>\
 			<td width="31%" style="background-color:'+ lColor + '">\
 			<div class="rName">\
-			'+ team1[i].name + '<i style="font-size:20px" class="'+team1[i].status+'"></i>\
+			'+ team1[i].name + '<i style="font-size:20px" class="' + team1[i].status + '"></i>\
 			</div>\
 			</td>\
 			<td width="5%" class="rImg" style="background-color:'+ lColor + '">\
@@ -259,7 +258,7 @@ function fillData() {
 			</td>\
 			<td width="31%" style="background-color:'+ rColor + '">\
 			<div class="rName">\
-			'+ team2[i].name + '<i style="font-size:20px" class="'+team2[i].status+'"></i>\
+			'+ team2[i].name + '<i style="font-size:20px" class="' + team2[i].status + '"></i>\
 			</div>\
 			</td>\
 			<td width="5%"style="background-color:'+ rColor + '">\
@@ -285,16 +284,18 @@ $(function () {
 		//Generic swipe handler for all directions
 		swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
 			//$(this).text("You swiped " + direction );
-
+			var tempMN = 0;
+			var RTW = findDraftRound(gRound.draft, true);
 			if (direction == "right") {
-				if (matchNo > 0) {
-					matchNo = matchNo - 1;
-					fillData();
+				console.log(RTW,gRound.draft);
+				if (gRound.draft > RTW[0]) {
+					tempMN = gRound.draft - 1;
+					changeMatch(tempMN);
 				}
 			} else if (direction == "left") {
-				if (matchNo < (Round.length - 1)) {
-					matchNo = matchNo + 1;
-					fillData();
+				if (gRound.draft < (RTW[1])) {
+					tempMN = gRound.draft + 1;
+					changeMatch(tempMN);
 				}
 			}
 		},
@@ -306,39 +307,49 @@ $(function () {
 function roundsThisWeek() {
 	var navBar = '';
 	var teams = [];
-	for (var i = 0; i < Round.length; i++) {
-		var homeTeam = Round[i].team_A.name;
-		var awayTeam = Round[i].team_B.name;
-		teams.push(homeTeam);
-		teams.push(awayTeam);
+	var RTW = findDraftRound(gRound.draft, true);
+	console.log(RTW);
+	for (var i = RTW[0]; i <= RTW[1]; i++) {
+		var homeTeam = nameSwap(currData[i].team_A.name);
+		var awayTeam = nameSwap(currData[i].team_B.name);
+		teams.push((homeTeam));
+		teams.push((awayTeam));
 		navBar = navBar + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="javascript:;" onClick="changeMatch(' + i + ')">' + homeTeam + ' v ' + awayTeam + '</a></li>';
 
 	}
 
 	document.getElementById("games").innerHTML = navBar;
-	getCurrentSeason().then((currD) => {
-		var byes = '';
-		for (var j = 0; j < currD.current_season.teams.length; j++) {
-			var found = 0;
-			var team = '';
-			for (var i = 0; i < teams.length; i++) {
-				if (teams[i] == currD.current_season.teams[j].name) {
-					found = 1;
-
-				}
+	var currentTeamList = ["Crusaders", "Brumbies", "Hurricanes", "Chiefs", "Highlanders", "Blues", "Force", "Waratahs", "Reds", "Rebels"];
+	var byes = '';
+	var found = 0;
+	for (var i = 0; i < currentTeamList.length; i++) {
+		for (var j = 0; j < teams.length; j++) {
+			if (teams[j] === currentTeamList[i]) {
+				found = 1;
 			}
-			if (found == 0) {
-				byes = byes + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="javascript:;" >' + currD.current_season.teams[j].name + '</a></li>';
-			}
-			found = 0;
 		}
-		document.getElementById("byes").innerHTML = byes;
 
-	})
+		if (found == 0) {
+			byes = byes + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="javascript:;" >' + currentTeamList[i] + '</a></li>';
+		}
+		found = 0;
+	}
+	document.getElementById("byes").innerHTML = byes;
+
+
 }
 function changeMatch(match) {
-	matchNo = match;
-	fillData();
+	var prevR = gRound.draft;
+	gRound.draft = match;
+	roundsThisWeek();
+	var roundGroup = findDraftRound(match,true);
+	if((roundGroup[0]<prevR)&&(roundGroup[1]>prevR)){
+		fillData();
+	}else{
+		getDraft().then(()=>{
+			fillData();
+		})
+	}
 }
 
 function chooseColour(team) {
@@ -439,4 +450,22 @@ function getPos(posRef) {
 	return { 'posName': posName, 'posNum': posNum };
 
 
+}
+
+function findDraftRound(round, getGames) {
+	var roundGroupings = [[0, 1], [2, 5], [6, 9], [10, 13], [14, 17], [18, 21], [22, 25], [26, 29], [30, 33], [34, 37], [38, 39]];
+	for (var i = 0; i < roundGroupings.length; i++) {
+		if ((roundGroupings[i][0] <= round) && (round <= roundGroupings[i][1])) {
+			if (getGames) {
+				return roundGroupings[i];
+			} else {
+				return i+1;
+
+			}
+		}
+	}
+}
+function findGameForRound(round) {
+	var roundGroupings = [[0, 1], [2, 5], [6, 9], [10, 13], [14, 17], [18, 21], [22, 25], [26, 29], [30, 33], [34, 37], [38, 39]];		
+				return roundGroupings[round][0];
 }
