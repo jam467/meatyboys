@@ -29,16 +29,14 @@ request({
 					for (var i = 0; i < games.length; i++) {
 						if(live[j].score.match_start_date<games[i].match_start_date){
 							console.log('splice')
-							spliceLoc =j;
+							spliceLoc =i;
 							newEntry = live[j].score;
 							i = games.length;
-							j=live.length;
 						}
 					}
+					games.splice(spliceLoc, 0, newEntry)
 				}
-
 			}
-			games.splice(spliceLoc, 0, newEntry)
 
 
 			
