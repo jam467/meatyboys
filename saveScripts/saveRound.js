@@ -6,9 +6,11 @@ fs.readFile(loc+'downloads/currentseason.json', function(err,data){
 	var data = JSON.parse(data);
 	var round = 0;
 	var ofRound = {};
+	var date = new Date();
+	var isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
 	for(var i =0;i<data.length;i++){
-		if(data[i].match_end_date<(new Date().toISOString())){
-			round = i;
+		if(data[i].match_end_date<isoDateTime){
+			round = i+1;
 			
 		}
 		ofRound = data[round].round;
