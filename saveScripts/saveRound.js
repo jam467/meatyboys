@@ -8,7 +8,7 @@ fs.readFile(loc+'downloads/currentseason.json', function(err,data){
 	var ofRound = {};
 	var date = new Date();
 	console.log(date);
-	var isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
+	var isoDateTime = new Date(date.getTime() - (-660 * 60000)).toISOString();
 	console.log(isoDateTime);
 	for(var i =0;i<data.length;i++){
 		if(data[i].match_end_date<isoDateTime){
