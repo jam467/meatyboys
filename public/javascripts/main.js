@@ -105,8 +105,8 @@ function setRound(round) {
 	changeMatch(round)
 }
 function getScore() {
-	document.getElementById("scoreHome").innerHTML = " " + currData[gRound.draft].team_A.score;
-	document.getElementById("scoreAway").innerHTML = currData[gRound.draft].team_B.score;
+	document.getElementById("scoreHome").innerHTML = " " + currData[gRound.draft-1].team_A.score;
+	document.getElementById("scoreAway").innerHTML = currData[gRound.draft-1].team_B.score;
 }
 
 function nameSwap(name){
@@ -116,8 +116,8 @@ function nameSwap(name){
 	return name;
 }
 function fillData() {
-	var homeName = nameSwap(currData[gRound.draft].team_A.name);
-	var awayName = nameSwap(currData[gRound.draft].team_B.name);
+	var homeName = nameSwap(currData[gRound.draft-1].team_A.name);
+	var awayName = nameSwap(currData[gRound.draft-1].team_B.name);
 	document.getElementById("round").innerHTML = "Round " + (findDraftRound(gRound.draft)) + '<span class="caret"></span>';
 	document.getElementById("homeT").innerHTML = homeName + '<span id="scoreHome"></span>';
 	document.getElementById("awayT").innerHTML = '<span id="scoreAway"></span> ' + awayName;
