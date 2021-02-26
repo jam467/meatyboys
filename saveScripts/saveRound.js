@@ -12,7 +12,7 @@ fs.readFile(loc+'downloads/currentseason.json', function(err,data){
 	console.log(isoDateTime);
 	for(var i =0;i<data.length;i++){
 		if(data[i].match_end_date<isoDateTime){
-			round = i+1;
+			round = i;
 			
 		}
 		ofRound = data[round].round;
