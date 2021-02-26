@@ -13,12 +13,15 @@ request({
 			json: true,
 			url: 'https://statsapi.foxsports.com.au/3.0/api/scoreboard/profiles/foxsports_rugby.json;masthead=foxsports?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2'
 		}, function (error, response, body2) {
-			var live = (body2)[0].series_scoreboards[0].scoreboards;
+			var liveAU = (body2)[0].series_scoreboards[0].scoreboards;
+			var liveNZ = (body2)[0].series_scoreboards[2].scoreboards;
+			var live = liveAU.concat(liveNZ);
 			var found = false;
 			var spliceLoc = 0;
 			var newEntry = {}
 			console.log(games.length);
 			for (var j = 0; j < live.length; j++) {
+				found = false;
 				for (var i = 0; i < games.length; i++) {
 					if (live[j].match_centre_url.match_id === games[i].match_id) {
 						found = true;
