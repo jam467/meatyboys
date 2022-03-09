@@ -3,15 +3,15 @@
 var request = require('request');
 var fs = require('fs');
 var loc = require('./saveLocation');
-
+var LEAGUEID = "d0f74b10-44f0-4504-b0b6-ae3f016ac58e";
+var SEASONID = "7df1adad-976d-4749-8e9f-ae3000fa3444";
 var matches = [];
 var j = 0;
 var i = 0;
 var complete = 0;
 fs.readFile(loc + 'downloads/round.json', function (err, data) {
-	var roundGroupings = [[0, 1], [2, 5], [6, 9], [10, 13], [14, 17], [18, 21], [22, 25], [26, 29], [30, 33], [34, 37], [38, 39]];
 	//console.log("james", JSON.parse(data),"James");
-	var round = findDraftRound(JSON.parse(data).round);
+	var round = (JSON.parse(data).round);
 
 
 	fs.readFile(loc + 'downloads/cookie.js', async function (err, data) {
@@ -45,7 +45,7 @@ function getPage(pageNo, cookie, round,playing) {
 		},
 		json: true,
 		url: 'http://www.fantasyrugbydraft.com/Web/Services/Action.asmx/Request',
-		body: { "Data": '{"filter":"","leagueid":"d585bd6a-a435-42ca-9e86-acb400cf4e7d","gameweek":' + round + ',"category":"255","seasons":"eb4f30c9-cff9-4dd8-82ec-ac690071ffc6","owner":"256","position":256,"teamnews":"256","sort":"","pageno":' + pageNo + ',"action":"member/league/playerhub","type":"control"}' }
+		body: { "Data": '{"filter":"","leagueid":"'+LEAGUEID+'","gameweek":' + round + ',"category":"255","seasons":"'+SEASONID+'","owner":"256","position":256,"teamnews":"256","sort":"","pageno":' + pageNo + ',"action":"member/league/playerhub","type":"control"}' }
 	},
 		function (error, response, body) {
 			var Content = JSON.parse(body.d)["Content"];
@@ -125,7 +125,7 @@ function getMatchup( cookie) {
 		headers: {
 			Cookie: cookie
 		},
-		url: 'http://www.fantasyrugbydraft.com/matchup/The_Meaty_Boys_3'
+		url: 'http://fantasyrugbydraft.com/matchup/Meaty_Boys_2'
 	},
 		function (error, response, body) {
 			var matchIds = [];
@@ -154,7 +154,7 @@ function getPlaying(cookie,matchup,round) {
 		},
 		json: true,
 		url: 'http://www.fantasyrugbydraft.com/Web/Services/Action.asmx/Request',
-		body: { "Data": '{"leagueid":"d585bd6a-a435-42ca-9e86-acb400cf4e7d","matchupid":"'+matchup+'","gameweekid":"'+round+'","action":"member/homepage/matchup","type":"control"}' }
+		body: { "Data": '{"leagueid":"'+LEAGUEID+'","matchupid":"'+matchup+'","gameweekid":"'+round+'","action":"member/homepage/matchup","type":"control"}' }
 	},
 		function (error, response, body) {
 			var Content = JSON.parse(body.d)["Content"];

@@ -10,11 +10,12 @@ var matchNo = 0;
 var roundFirstLoad = 0;
 $(document).ready(function () {
 	$.get('/getRound', function (roundD) {
-		gRound = { draft: roundD.round, official: (roundD.official ? roundD.official.number ? roundD.official.number : 0 : 0) };
+		gRound = { draft: roundD.round, match: 0 };
 
-		listRounds(11);//set to latest round
+		listRounds(15);//set to latest round
 		getCurrentSeason().then((currD) => {
 			currData = currD;
+			gRound.match = getCurrentMatch(gRound.draft);
 			getDraft().then(() => {
 				roundsThisWeek();
 				fillData();
@@ -52,7 +53,7 @@ function getCurrentSeason() {
 function getDraft() {
 	return new Promise((resolve, reject) => {
 
-		$.post('/getDraft', { "round": (findDraftRound(gRound.draft)) }, function (data) {
+		$.post('/getDraft', { "round": ((gRound.draft)) }, function (data) {
 			//console.log(data)
 			draftData = (data);
 			resolve();
@@ -62,7 +63,7 @@ function getDraft() {
 function listRounds(noRounds) {
 	var roundList = '';
 	for (var i = 0; i < noRounds; i++) {
-		roundList = roundList + '<li><a href="javascript:;" onclick="setRound(' + findGameForRound((i)) + ')" id="priceChanges" data-toggle="collapse" data-target=".navbar-collapse.in" >Round ' + (i + 1) + '</a></li>'
+		roundList = roundList + '<li><a href="javascript:;" onclick="setRound(' + ((i+1)) + ')" id="priceChanges" data-toggle="collapse" data-target=".navbar-collapse.in" >Round ' + (i + 1) + '</a></li>'
 	}
 	document.getElementById("roundList").innerHTML = roundList;
 }
@@ -102,26 +103,45 @@ function setZoom() {
 	}
 }
 function setRound(round) {
-	changeMatch(round)
+	console.log(round,findMatchfromRound(round));
+	changeMatch(findMatchfromRound(round))
 }
 function getScore() {
 	document.getElementById("scoreHome").innerHTML = " " + currData[gRound.draft].team_A.score;
 	document.getElementById("scoreAway").innerHTML = currData[gRound.draft].team_B.score;
 }
 
-function nameSwap(name){
-	if(name==='Western Force'){
+function nameSwap(name) {
+	if (name === 'Western Force') {
 		return 'Force';
 	}
 	return name;
 }
+
+function getCurrentMatch(rnd) {
+	var currMatch = 0;
+	var found =false;
+	for(var i=0;i<currData.length;i++){
+		if(currData[i].round===rnd){
+			if(new Date(currData[i].dateTime)<new Date()){
+				currMatch = i;
+				found = true;
+			}
+		}
+	}
+	if(!found){
+		currMatch = findMatchfromRound(rnd)
+	}
+	console.log(currMatch)
+	return currMatch;
+}
 function fillData() {
-	var homeName = nameSwap(currData[gRound.draft].team_A.name);
-	var awayName = nameSwap(currData[gRound.draft].team_B.name);
-	document.getElementById("round").innerHTML = "Round " + (findDraftRound(gRound.draft)) + '<span class="caret"></span>';
+	var homeName = nameSwap(currData[gRound.match]["Team 1"]);
+	var awayName = nameSwap(currData[gRound.match]["Team 2"]);
+	document.getElementById("round").innerHTML = "Round " + ((gRound.draft)) + '<span class="caret"></span>';
 	document.getElementById("homeT").innerHTML = homeName + '<span id="scoreHome"></span>';
 	document.getElementById("awayT").innerHTML = '<span id="scoreAway"></span> ' + awayName;
-	getScore();
+	// getScore();
 	var team1 = [];
 	var team2 = [];
 	var table = document.getElementById("playerTable");
@@ -287,7 +307,7 @@ $(function () {
 			var tempMN = 0;
 			var RTW = findDraftRound(gRound.draft, true);
 			if (direction == "right") {
-				console.log(RTW,gRound.draft);
+				console.log(RTW, gRound.draft);
 				if (gRound.draft > RTW[0]) {
 					tempMN = gRound.draft - 1;
 					changeMatch(tempMN);
@@ -307,19 +327,20 @@ $(function () {
 function roundsThisWeek() {
 	var navBar = '';
 	var teams = [];
-	var RTW = findDraftRound(gRound.draft, true);
-	console.log(RTW);
-	for (var i = RTW[0]; i <= RTW[1]; i++) {
-		var homeTeam = nameSwap(currData[i].team_A.name);
-		var awayTeam = nameSwap(currData[i].team_B.name);
-		teams.push((homeTeam));
-		teams.push((awayTeam));
-		navBar = navBar + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="javascript:;" onClick="changeMatch(' + i + ')">' + homeTeam + ' v ' + awayTeam + '</a></li>';
-
+	console.log(gRound.draft);
+	for (var i = 0; i < currData.length; i++) {
+		if (currData[i].round === gRound.draft) {
+			console.log(currData[i].round,gRound.draft)
+			var homeTeam = nameSwap(currData[i]["Team 1"]);
+			var awayTeam = nameSwap(currData[i]["Team 2"]);
+			teams.push((homeTeam));
+			teams.push((awayTeam));
+			navBar = navBar + '<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="javascript:;" onClick="changeMatch(' + i + ')">' + homeTeam + ' v ' + awayTeam + '</a></li>';
+		}
 	}
 
 	document.getElementById("games").innerHTML = navBar;
-	var currentTeamList = ["Crusaders", "Brumbies", "Hurricanes", "Chiefs", "Highlanders", "Blues", "Force", "Waratahs", "Reds", "Rebels"];
+	var currentTeamList = ["Crusaders", "Brumbies", "Hurricanes", "Chiefs", "Highlanders", "Blues", "Force", "Waratahs", "Reds", "Rebels", "Moana Pasifika", "Fijian Drua"];
 	var byes = '';
 	var found = 0;
 	for (var i = 0; i < currentTeamList.length; i++) {
@@ -339,14 +360,17 @@ function roundsThisWeek() {
 
 }
 function changeMatch(match) {
+	console.log(match)
 	var prevR = gRound.draft;
-	gRound.draft = match;
+	gRound.match = match;
+	gRound.draft = currData[match].round;
 	roundsThisWeek();
-	var roundGroup = findDraftRound(match,true);
-	if((roundGroup[0]<prevR)&&(roundGroup[1]>prevR)){
+	if (currData[match].round === prevR) {
+		console.log('in')
 		fillData();
-	}else{
-		getDraft().then(()=>{
+	} else {
+		console.log(gRound.draft)
+		getDraft().then(() => {
 			fillData();
 		})
 	}
@@ -459,13 +483,16 @@ function findDraftRound(round, getGames) {
 			if (getGames) {
 				return roundGroupings[i];
 			} else {
-				return i+1;
+				return i + 1;
 
 			}
 		}
 	}
 }
-function findGameForRound(round) {
-	var roundGroupings = [[0, 1], [2, 5], [6, 9], [10, 13], [14, 17], [18, 21], [22, 25], [26, 29], [30, 33], [34, 37], [38, 39]];		
-				return roundGroupings[round][0];
+function findMatchfromRound(rn) {
+	for(var i =0;i<currData.length;i++){
+		if(currData[i].round===rn){
+			return i;
+		}
+	}
 }

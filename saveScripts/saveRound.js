@@ -11,21 +11,19 @@ fs.readFile(loc+'downloads/currentseason.json', function(err,data){
 	var isoDateTime = new Date(date.getTime() - (-660 * 60000)).toISOString();
 	console.log(isoDateTime);
 	for(var i =0;i<data.length;i++){
-		console.log(data[i].match_end_date);
-		if(data[i].match_end_date<isoDateTime){
-			console.log('o')
-			var twoDays = new Date(date.getTime() - (-660 * 60000)+(60*60*24*2)).toISOString();
-			if(twoDays<data[i].match_end_date){
-				round = i;
+		var gameDate = (new Date(data[i].datetime));
+		if(gameDate<new Date(isoDateTime)){
+			var twoDays = new Date(date.getTime() - (-660 * 60000)+(60*60*24*2));
+			if(twoDays<gameDate){
+				ofRound = data[i].round;
 			}else{
-				round = i+1;
+				ofRound = data[i].round+1;
 			}
 			
 		}
-		console.log(round)
-		ofRound = data[round].round;
+		console.log(ofRound)
 	}
-		fs.writeFile(loc+'downloads/round.json', JSON.stringify({"round":round,"official":ofRound}), function (err) {
+		fs.writeFile(loc+'downloads/round.json', JSON.stringify({"round":ofRound,"official":ofRound}), function (err) {
   						//if (err) throw err;
  						console.log('Saved!');
 					});

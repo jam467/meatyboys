@@ -11,6 +11,7 @@ fs.readFile(loc+'downloads/round.json', function(err, data) {
 		url:'https://statsapi.foxsports.com.au/3.0/api/sports/rugby/series/1/currentseason.json?userkey=A00239D3-45F6-4A0A-810C-54A347F144C2'}, async function (error, response, body) {
 			var roundObj = body.current_season.rounds[round-1];
 			var playAr = [];
+			console.log(body)
 			for(var i=1;i<=roundObj.matches_in_round;i++){
 				var roundText = '';
 				if(roundObj.number<10){
@@ -19,7 +20,7 @@ fs.readFile(loc+'downloads/round.json', function(err, data) {
 					var roundText = roundObj.number;
 					
 				}
-				playAr.push(scoreboard('SRU2020'+roundText+'0'+i).then((result)=>{
+				playAr.push(scoreboard('SRU2022'+roundText+'0'+i).then((result)=>{
 					return result;
 				}));
 			}
