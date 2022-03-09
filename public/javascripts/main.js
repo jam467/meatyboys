@@ -106,9 +106,39 @@ function setRound(round) {
 	console.log(round, findMatchfromRound(round));
 	changeMatch(findMatchfromRound(round))
 }
+function nameMod (name) {
+	var currentTeamList = ["Crusaders", "Brumbies", "Hurricanes", "Chiefs", "Highlanders", "Blues", "Force", "Waratahs", "Reds", "Rebels", "Moana Pasifika", "Fijian Drua"];
+
+	if(name==="Melbourne Rebels"){
+		return "Rebels";
+	}
+	if(name==="New South Wales Waratahs"){
+		return "Waratahs";
+	}
+	if(name==="Queensland Reds"){
+		return "Reds";
+	}
+	return name;
+}
 function getScore() {
-	document.getElementById("scoreHome").innerHTML = " " + currData[gRound.draft].team_A.score;
-	document.getElementById("scoreAway").innerHTML = currData[gRound.draft].team_B.score;
+	$.get('/getScoreboard/' + gRound.draft, function (score) {
+		console.log(score);
+		var currGame = currData[gRound.match];
+		var teamA = {}
+		var teamB = {}
+		for(var i=0;i<score.length;i++){
+			if(score[i].team){
+				if(currGame["Team 1"]===nameMod(score[i].team.name)){
+					teamA = score[i];
+				}
+				if(currGame["Team 2"]===nameMod(score[i].team.name)){
+					teamB = score[i];
+				}
+			}
+		}
+		document.getElementById("scoreHome").innerHTML = " " + teamA.score;
+		document.getElementById("scoreAway").innerHTML = teamB.score;
+	})
 }
 
 function nameSwap(name) {
@@ -141,7 +171,7 @@ function fillData() {
 	document.getElementById("round").innerHTML = "Round " + ((gRound.draft)) + '<span class="caret"></span>';
 	document.getElementById("homeT").innerHTML = homeName + '<span id="scoreHome"></span>';
 	document.getElementById("awayT").innerHTML = '<span id="scoreAway"></span> ' + awayName;
-	// getScore();
+	getScore();
 	var team1 = [];
 	var team2 = [];
 	var table = document.getElementById("playerTable");
