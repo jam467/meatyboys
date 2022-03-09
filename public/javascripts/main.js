@@ -63,7 +63,7 @@ function getDraft() {
 function listRounds(noRounds) {
 	var roundList = '';
 	for (var i = 0; i < noRounds; i++) {
-		roundList = roundList + '<li><a href="javascript:;" onclick="setRound(' + ((i+1)) + ')" id="priceChanges" data-toggle="collapse" data-target=".navbar-collapse.in" >Round ' + (i + 1) + '</a></li>'
+		roundList = roundList + '<li><a href="javascript:;" onclick="setRound(' + ((i + 1)) + ')" id="priceChanges" data-toggle="collapse" data-target=".navbar-collapse.in" >Round ' + (i + 1) + '</a></li>'
 	}
 	document.getElementById("roundList").innerHTML = roundList;
 }
@@ -103,7 +103,7 @@ function setZoom() {
 	}
 }
 function setRound(round) {
-	console.log(round,findMatchfromRound(round));
+	console.log(round, findMatchfromRound(round));
 	changeMatch(findMatchfromRound(round))
 }
 function getScore() {
@@ -120,16 +120,16 @@ function nameSwap(name) {
 
 function getCurrentMatch(rnd) {
 	var currMatch = 0;
-	var found =false;
-	for(var i=0;i<currData.length;i++){
-		if(currData[i].round===rnd){
-			if(new Date(currData[i].dateTime)<new Date()){
+	var found = false;
+	for (var i = 0; i < currData.length; i++) {
+		if (currData[i].round === rnd) {
+			if (new Date(currData[i].dateTime) < new Date()) {
 				currMatch = i;
 				found = true;
 			}
 		}
 	}
-	if(!found){
+	if (!found) {
 		currMatch = findMatchfromRound(rnd)
 	}
 	console.log(currMatch)
@@ -305,16 +305,15 @@ $(function () {
 		swipe: function (event, direction, distance, duration, fingerCount, fingerData) {
 			//$(this).text("You swiped " + direction );
 			var tempMN = 0;
-			var RTW = findDraftRound(gRound.draft, true);
+			var curRoun = gRound.draft;
 			if (direction == "right") {
-				console.log(RTW, gRound.draft);
-				if (gRound.draft > RTW[0]) {
-					tempMN = gRound.draft - 1;
+				tempMN = gRound.match - 1;
+				if (currData[tempMN].round === curRoun) {
 					changeMatch(tempMN);
 				}
 			} else if (direction == "left") {
-				if (gRound.draft < (RTW[1])) {
-					tempMN = gRound.draft + 1;
+				tempMN = gRound.match + 1;
+				if (currData[tempMN].round === curRoun) {
 					changeMatch(tempMN);
 				}
 			}
@@ -330,7 +329,7 @@ function roundsThisWeek() {
 	console.log(gRound.draft);
 	for (var i = 0; i < currData.length; i++) {
 		if (currData[i].round === gRound.draft) {
-			console.log(currData[i].round,gRound.draft)
+			console.log(currData[i].round, gRound.draft)
 			var homeTeam = nameSwap(currData[i]["Team 1"]);
 			var awayTeam = nameSwap(currData[i]["Team 2"]);
 			teams.push((homeTeam));
@@ -490,8 +489,8 @@ function findDraftRound(round, getGames) {
 	}
 }
 function findMatchfromRound(rn) {
-	for(var i =0;i<currData.length;i++){
-		if(currData[i].round===rn){
+	for (var i = 0; i < currData.length; i++) {
+		if (currData[i].round === rn) {
 			return i;
 		}
 	}
