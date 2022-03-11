@@ -62,6 +62,9 @@ function getPage(pageNo, cookie, round,playing) {
 				posEnd = Content.indexOf('<', posStart + 4);
 				var position = Content.slice(posStart + 4, posEnd)
 				indexTemp = Content.indexOf('<td>', posEnd);
+				idStart = Content.indexOf('playerid', indexTemp + 4);
+				idEnd = Content.indexOf('playername', playStart);
+				var playerId = Content.slice(idStart + 10, idEnd-2).trim();
 				playStart = Content.indexOf('>', indexTemp + 4);
 				playEnd = Content.indexOf('<', playStart);
 				var playerName = Content.slice(playStart + 1, playEnd).trim();
@@ -90,6 +93,7 @@ function getPage(pageNo, cookie, round,playing) {
 						bench = false;
 					}
 				}
+				// console.log(playerId)
 				matches[i] = {
 					"playerName": playerName,
 					"team": team,
@@ -97,7 +101,8 @@ function getPage(pageNo, cookie, round,playing) {
 					"bench": bench,
 					"score": score,
 					"position": position,
-					"teamNews": TN
+					"teamNews": TN,
+					"playerId":playerId
 				};
 				i++;
 
@@ -105,7 +110,7 @@ function getPage(pageNo, cookie, round,playing) {
 			complete++;
 			console.log(complete);
 			if (complete == 16) {
-				fs.writeFile(loc + 'downloads/draft' + round + '.json', JSON.stringify(matches), function (err) {
+				fs.writeFile(loc + 'downloads/draftPlayers' + round + '.json', JSON.stringify(matches), function (err) {
 					//if (err) throw err;
 					console.log('Saved!' + round);
 					complete = 0;

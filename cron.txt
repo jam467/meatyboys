@@ -1,5 +1,6 @@
-*/3 * * * 5,6,0,1 /usr/bin/node /home/ubuntu/meatyboys/saveScripts/saveDraft.js
+*/3 * * * 5,6,0,1 /usr/bin/node /home/ubuntu/meatyboys/saveScripts/getPlayerScores.js
 */120 * * * 2,3,4 /usr/bin/node /home/ubuntu/meatyboys/saveScripts/saveDraft.js
+*/60 * * * 0,1,5,6 /usr/bin/node /home/ubuntu/meatyboys/saveScripts/saveDraft.js
 */20 * * * 4,5,6,0,1 /usr/bin/node /home/ubuntu/meatyboys/saveScripts/saveRound.js
 * * * * 5,6,0 /usr/bin/node /home/ubuntu/meatyboys/saveScripts/saveScoreboard.js
 */120 * * * 1,2,3,4 /usr/bin/node /home/ubuntu/meatyboys/saveScripts/saveScoreboard.js
