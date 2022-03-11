@@ -153,7 +153,7 @@ function getCurrentMatch(rnd) {
 	var found = false;
 	for (var i = 0; i < currData.length; i++) {
 		if (currData[i].round === rnd) {
-			if (new Date(currData[i].dateTime) < new Date()) {
+			if (new Date(currData[i].datetime) < new Date()) {
 				currMatch = i;
 				found = true;
 			}
