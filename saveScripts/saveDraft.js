@@ -15,20 +15,20 @@ fs.readFile(loc + 'downloads/round.json', function (err, data) {
 
 
 	fs.readFile(loc + 'downloads/cookie.js', async function (err, data) {
-		var matchups = await getMatchup( data);
+		var matchups = await getMatchup(data);
 		var playingMatchups = [];
-		for(var i=0;i<matchups.length;i++){
-			playingMatchups = playingMatchups.concat(await getPlaying(data,matchups[i],round));
+		for (var i = 0; i < matchups.length; i++) {
+			playingMatchups = playingMatchups.concat(await getPlaying(data, matchups[i], round));
 
 		}
-		if(process.argv[2]=="0"){
-			while(j<16){
-				getPage(j,data,process.argv[3],playingMatchups);
+		if (process.argv[2] == "0") {
+			while (j < 16) {
+				getPage(j, data, process.argv[3], playingMatchups);
 				j++;
 			}
-		}else{
-			while(j<16){
-				getPage(j,data,round,playingMatchups);
+		} else {
+			while (j < 16) {
+				getPage(j, data, round, playingMatchups);
 				//	console.log('"'+round+'"');
 				j++;
 			}
@@ -36,7 +36,7 @@ fs.readFile(loc + 'downloads/round.json', function (err, data) {
 	});
 
 });
-function getPage(pageNo, cookie, round,playing) {
+function getPage(pageNo, cookie, round, playing) {
 	console.log(round + '+' + pageNo);
 	request({
 		method: 'POST',
@@ -45,7 +45,7 @@ function getPage(pageNo, cookie, round,playing) {
 		},
 		json: true,
 		url: 'http://www.fantasyrugbydraft.com/Web/Services/Action.asmx/Request',
-		body: { "Data": '{"filter":"","leagueid":"'+LEAGUEID+'","gameweek":' + round + ',"category":"255","seasons":"'+SEASONID+'","owner":"256","position":256,"teamnews":"256","sort":"","pageno":' + pageNo + ',"action":"member/league/playerhub","type":"control"}' }
+		body: { "Data": '{"filter":"","leagueid":"' + LEAGUEID + '","gameweek":' + round + ',"category":"255","seasons":"' + SEASONID + '","owner":"256","position":256,"teamnews":"256","sort":"","pageno":' + pageNo + ',"action":"member/league/playerhub","type":"control"}' }
 	},
 		function (error, response, body) {
 			var Content = JSON.parse(body.d)["Content"];
@@ -64,7 +64,7 @@ function getPage(pageNo, cookie, round,playing) {
 				indexTemp = Content.indexOf('<td>', posEnd);
 				idStart = Content.indexOf('playerid', indexTemp + 4);
 				idEnd = Content.indexOf('playername', playStart);
-				var playerId = Content.slice(idStart + 10, idEnd-2).trim();
+				var playerId = Content.slice(idStart + 10, idEnd - 2).trim();
 				playStart = Content.indexOf('>', indexTemp + 4);
 				playEnd = Content.indexOf('<', playStart);
 				var playerName = Content.slice(playStart + 1, playEnd).trim();
@@ -82,14 +82,14 @@ function getPage(pageNo, cookie, round,playing) {
 				TNEnd = Content.indexOf('<', TNStart + 4);
 				var TN = Content.slice(TNStart + 4, TNEnd);
 				begin = Content.indexOf('<td>', scoreEnd);
-				TN = TN.substring(37,TN.length-13);
+				TN = TN.substring(37, TN.length - 13);
 				team = team.substring(14, team.length);
 				position = position.substring(14, position.length);
 				score = score.substring(14, score.length);
 				userName = userName.substring(14, userName.length);
 				var bench = true;
-				for(var k=0;k<playing.length;k++){
-					if(playerName===playing[k]){
+				for (var k = 0; k < playing.length; k++) {
+					if (playerName === playing[k]) {
 						bench = false;
 					}
 				}
@@ -102,7 +102,7 @@ function getPage(pageNo, cookie, round,playing) {
 					"score": score,
 					"position": position,
 					"teamNews": TN,
-					"playerId":playerId
+					"playerId": playerId
 				};
 				i++;
 
@@ -110,83 +110,86 @@ function getPage(pageNo, cookie, round,playing) {
 			complete++;
 			console.log(complete);
 			if (complete == 16) {
-				fs.writeFile(loc + 'downloads/draftPlayers' + round + '.json', JSON.stringify(matches), function (err) {
-					//if (err) throw err;
-					console.log('Saved!' + round);
-					complete = 0;
+				fs.readFile(loc + 'downloads/draftPlayers'+round+'.js', async function (err, dpData) {
+					if (matches.length>=dpData.length) {
+						fs.writeFile(loc + 'downloads/draftPlayers' + round + '.json', JSON.stringify(matches), function (err) {
+							//if (err) throw err;
+							console.log('Saved!' + round);
+							complete = 0;
+						});
+					}
 				});
 			}
-
 
 		}
 	);
 
 
 }
-function getMatchup( cookie) {
-	return new Promise((res,rej)=>{
-	request({
-		method: 'GET',
-		headers: {
-			Cookie: cookie
+function getMatchup(cookie) {
+	return new Promise((res, rej) => {
+		request({
+			method: 'GET',
+			headers: {
+				Cookie: cookie
+			},
+			url: 'http://fantasyrugbydraft.com/matchup/Meaty_Boys_2'
 		},
-		url: 'http://fantasyrugbydraft.com/matchup/Meaty_Boys_2'
-	},
-		function (error, response, body) {
-			var matchIds = [];
-			var start = 0
-			for (var i = 0; i < 5; i++) {
-				var posStart = body.indexOf('matchupid', start);
-				matchIds.push(body.slice(posStart + 11, posStart + 47));
-				start = posStart + 47;
+			function (error, response, body) {
+				var matchIds = [];
+				var start = 0
+				for (var i = 0; i < 5; i++) {
+					var posStart = body.indexOf('matchupid', start);
+					matchIds.push(body.slice(posStart + 11, posStart + 47));
+					start = posStart + 47;
+				}
+				res(matchIds);
+
 			}
-			res(matchIds);
 
-		}
-
-	);
+		);
 	});
 
 
 }
 
-function getPlaying(cookie,matchup,round) {
-	return new Promise((res,rej)=>{
-	request({
-		method: 'POST',
-		headers: {
-			Cookie: cookie
+function getPlaying(cookie, matchup, round) {
+	return new Promise((res, rej) => {
+		request({
+			method: 'POST',
+			headers: {
+				Cookie: cookie
+			},
+			json: true,
+			url: 'http://www.fantasyrugbydraft.com/Web/Services/Action.asmx/Request',
+			body: { "Data": '{"leagueid":"' + LEAGUEID + '","matchupid":"' + matchup + '","gameweekid":"' + round + '","action":"member/homepage/matchup","type":"control"}' }
 		},
-		json: true,
-		url: 'http://www.fantasyrugbydraft.com/Web/Services/Action.asmx/Request',
-		body: { "Data": '{"leagueid":"'+LEAGUEID+'","matchupid":"'+matchup+'","gameweekid":"'+round+'","action":"member/homepage/matchup","type":"control"}' }
-	},
-		function (error, response, body) {
-			var Content = JSON.parse(body.d)["Content"];
-			var begin = Content.indexOf('</th>');
-			var indexTemp = 0;
-			var indexTemp = 0;
-			var playStart = 0;
-			var playEnd = 0;
-			begin = 0;
-			var players = [];
-			while (begin != -1) {
-				posStart = Content.indexOf('playername', begin);
-				posEnd = Content.indexOf('>', posStart + 10);
-				var player = Content.slice(posStart + 12, posEnd-1);
-				while(player.includes('&#39;')){
-					player = player.replace('&#39;',"'");
+			function (error, response, body) {
+				var Content = JSON.parse(body.d)["Content"];
+				var begin = Content.indexOf('</th>');
+				var indexTemp = 0;
+				var indexTemp = 0;
+				var playStart = 0;
+				var playEnd = 0;
+				begin = 0;
+				var players = [];
+				while (begin != -1) {
+					posStart = Content.indexOf('playername', begin);
+					posEnd = Content.indexOf('>', posStart + 10);
+					var player = Content.slice(posStart + 12, posEnd - 1);
+					while (player.includes('&#39;')) {
+						player = player.replace('&#39;', "'");
+					}
+					players.push(player);
+					begin = Content.indexOf('playername', posEnd + 5);
+
+
 				}
-				players.push(player);
-				begin = Content.indexOf('playername', posEnd+5);
-				
+
+				res(players);
 
 			}
-
-			res(players);
-
-		}
-	);
+		);
 	})
 
 
@@ -199,7 +202,7 @@ function findDraftRound(round, getGames) {
 			if (getGames) {
 				return roundGroupings[i];
 			} else {
-				return i+1;
+				return i + 1;
 
 			}
 		}

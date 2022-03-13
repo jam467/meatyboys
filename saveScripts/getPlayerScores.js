@@ -19,7 +19,7 @@ fs.readFile(loc + 'downloads/round.json', function (err, data) {
 		fs.readFile(loc + 'downloads/draftPlayers' + round + '.json', async function (err, dp) {
 			var dps = (JSON.parse(dp));
 			for (var i = 0; i < dps.length; i++) {
-				if ((dps[i].teamNews === "Starting") || (dps[i].teamNews === "Bench")) {
+				if ((dps[i].teamNews === "Starting") || (dps[i].teamNews === "Bench") || (dps[i].position === "Front Row")) {
 
 						dps[i].score = await getPlayer(dps[i].playerId, data, round, i)
 				}
