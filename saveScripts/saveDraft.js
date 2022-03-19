@@ -110,13 +110,21 @@ function getPage(pageNo, cookie, round, playing) {
 			complete++;
 			console.log(complete);
 			if (complete == 16) {
-				fs.readFile(loc + 'downloads/draftPlayers'+round+'.js', async function (err, dpData) {
-					if (matches.length>=dpData.length) {
-						fs.writeFile(loc + 'downloads/draftPlayers' + round + '.json', JSON.stringify(matches), function (err) {
-							//if (err) throw err;
-							console.log('Saved!' + round);
-							complete = 0;
-						});
+				fs.readFile(loc + 'downloads/draftPlayers' + round + '.js', async function (err, dpData) {
+					var tally = 0;
+					for (var p = 0; p < matches.length; p++) {
+						if (matches[p].position === "Front Row") {
+							tally++;
+						}
+					}
+					if (tally > 5) {
+					if (!dpData||(matches.length >= dpData.length)) {
+							fs.writeFile(loc + 'downloads/draftPlayers' + round + '.json', JSON.stringify(matches), function (err) {
+								//if (err) throw err;
+								console.log('Saved!' + round);
+								complete = 0;
+							});
+						}
 					}
 				});
 			}
