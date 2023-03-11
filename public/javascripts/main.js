@@ -118,6 +118,9 @@ function nameMod (name) {
 	if(name==="Queensland Reds"){
 		return "Reds";
 	}
+	if(name==="Western Force"){
+		return "Force";
+	}
 	return name;
 }
 function getScore() {
