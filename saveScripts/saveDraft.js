@@ -3,14 +3,14 @@
 var request = require('request');
 var fs = require('fs');
 var loc = require('./saveLocation');
-var LEAGUEID = "d0f74b10-44f0-4504-b0b6-ae3f016ac58e";
-var SEASONID = "7df1adad-976d-4749-8e9f-ae3000fa3444";
+var LEAGUEID = "1ba5f27e-6de1-4590-afdf-af95011b0b74";
+var SEASONID = "a2adb73b-4599-42f2-8b1b-af8e013efb80";
 var matches = [];
 var j = 0;
 var i = 0;
 var complete = 0;
 fs.readFile(loc + 'downloads/round.json', function (err, data) {
-	//console.log("james", JSON.parse(data),"James");
+	console.log(data);
 	var round = (JSON.parse(data).round);
 
 
@@ -45,7 +45,7 @@ function getPage(pageNo, cookie, round, playing) {
 		},
 		json: true,
 		url: 'http://www.fantasyrugbydraft.com/Web/Services/Action.asmx/Request',
-		body: { "Data": '{"filter":"","leagueid":"' + LEAGUEID + '","gameweek":' + round + ',"category":"255","seasons":"' + SEASONID + '","owner":"256","position":256,"teamnews":"256","sort":"","pageno":' + pageNo + ',"action":"member/league/playerhub","type":"control"}' }
+		body: { "Data": '{"filter":"","leagueid":"' + LEAGUEID + '","gameweek":' + round + ',"category":"10000","seasons":"' + SEASONID + '","owner":"256","position":256,"teamnews":"256","sort":"","pageno":' + pageNo + ',"action":"member/league/playerhub","type":"control"}' }
 	},
 		function (error, response, body) {
 			var Content = JSON.parse(body.d)["Content"];
@@ -113,7 +113,7 @@ function getPage(pageNo, cookie, round, playing) {
 				fs.readFile(loc + 'downloads/draftPlayers' + round + '.js', async function (err, dpData) {
 					var tally = 0;
 					for (var p = 0; p < matches.length; p++) {
-						if (matches[p].position === "Front Row") {
+							if (matches[p].position === "Front Row") {
 							tally++;
 						}
 					}
