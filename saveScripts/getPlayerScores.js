@@ -3,8 +3,8 @@
 var request = require('request');
 var fs = require('fs');
 var loc = require('./saveLocation');
-var LEAGUEID = "1ba5f27e-6de1-4590-afdf-af95011b0b74";
-var SEASONID = "a2adb73b-4599-42f2-8b1b-af8e013efb80";
+var LEAGUEID = "8ea4e911-5a76-457e-936e-b11901430ec6";
+// var SEASONID = "a2adb73b-4599-42f2-8b1b-af8e013efb80";
 var matches = [];
 var j = 0;
 var i = 0;
@@ -96,7 +96,7 @@ function getMatchup(cookie) {
 			headers: {
 				Cookie: cookie
 			},
-			url: 'http://fantasyrugbydraft.com/matchup/Meaty_Boys_2'
+			url: 'http://fantasyrugbydraft.com/matchup/Meaty_Boys_2_1'
 		},
 			function (error, response, body) {
 				var matchIds = [];
