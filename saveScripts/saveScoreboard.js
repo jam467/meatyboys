@@ -10,7 +10,7 @@ fs.readFile(loc + 'downloads/round.json', function (err, data) {
 		var roundDates = [];
 		for (var i = 0; i < currSeas.length; i++) {
 			if (currSeas[i].round === round) {
-				roundDates.push(new Date(currSeas[i].datetime));
+				roundDates.push(new Date(convertDate(currSeas[i].datetime)));
 			}
 		}
 		var scoreArr = [];
@@ -41,6 +41,7 @@ fs.readFile(loc + 'downloads/round.json', function (err, data) {
 				json: true,
 				url: 'https://site.web.api.espn.com/apis/site/v2/sports/rugby/scorepanel?contentorigin=espn&dates=' + dateTag + '&lang=en&region=us'
 			}, async function (error, response, body) {
+				console.log(body);
 				var legs = body.scores;
 				var leg = {};
 				for (var i = 0; i < legs.length; i++) {
@@ -68,3 +69,18 @@ fs.readFile(loc + 'downloads/round.json', function (err, data) {
 
 	});
 });
+
+
+function convertDate(date) {
+	//flip the date to be in the correct format
+	//15/02/2019 06:35:00
+	//2019-02-15T06:35:00.000Z
+	date = date.split("/");
+	var day = date[0];
+	var month = date[1];
+	var year = date[2].split(" ");
+	date = year[0] + "-" + month + "-" + day;
+	time = year[1];
+	date = date + "T" + time + ":00.000Z";
+	return date;
+}
