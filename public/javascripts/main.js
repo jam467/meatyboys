@@ -156,7 +156,7 @@ function getCurrentMatch(rnd) {
 	var found = false;
 	for (var i = 0; i < currData.length; i++) {
 		if (currData[i].round === rnd) {
-			if (new Date(currData[i].datetime) < new Date()) {
+			if (new Date(convertDate(currData[i].datetime)) < new Date()) {
 				currMatch = i;
 				found = true;
 			}
@@ -527,4 +527,18 @@ function findMatchfromRound(rn) {
 			return i;
 		}
 	}
+}
+
+function convertDate(date) {
+	//flip the date to be in the correct format
+	//15/02/2019 06:35:00
+	//2019-02-15T06:35:00.000Z
+	date = date.split("/");
+	var day = date[0];
+	var month = date[1];
+	var year = date[2].split(" ");
+	date = year[0] + "-" + month + "-" + day;
+	time = year[1];
+	date = date + "T" + time + ":00.000Z";
+	return date;
 }
