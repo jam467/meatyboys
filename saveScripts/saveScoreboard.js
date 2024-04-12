@@ -81,6 +81,6 @@ function convertDate(date) {
 	var year = date[2].split(" ");
 	date = year[0] + "-" + month + "-" + day;
 	time = year[1];
-	date = date + "T" + time + ":00.000Z";
+	date = date + "T" + time;
 	return date;
 }
