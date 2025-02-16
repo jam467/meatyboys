@@ -1,926 +1,695 @@
 [
-    {
-      "index": 1,
-      "datetime": "23/02/2024 17:05",
-      "round": 1,
-      "venue": "FMG Stadium, Hamilton",
-      "Team 1": "Chiefs",
-      "Team 2": "Crusaders",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 2,
-      "datetime": "23/02/2024 19:35",
-      "round": 1,
-      "venue": "AAMI Park, Melbourne",
-      "Team 1": "Rebels",
-      "Team 2": "Brumbies",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 3,
-      "datetime": "23/02/2024 22:00",
-      "round": 1,
-      "venue": "HBF Park, Perth",
-      "Team 1": "Force",
-      "Team 2": "Hurricanes",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 4,
-      "datetime": "24/02/2024 14:35",
-      "round": 1,
-      "venue": "TBC",
-      "Team 1": "Blues",
-      "Team 2": "Fijian Drua",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 5,
-      "datetime": "24/02/2024 17:05",
-      "round": 1,
-      "venue": "Forsyth Barr Stadium, Dunedin",
-      "Team 1": "Highlanders",
-      "Team 2": "Moana Pasifika",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 6,
-      "datetime": "24/02/2024 20:05",
-      "round": 1,
-      "venue": "Suncorp Stadium, Brisbane",
-      "Team 1": "Reds",
-      "Team 2": "Waratahs",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 7,
-      "datetime": "01/03/2024 18:00",
-      "round": 2,
-      "venue": "AAMI Park",
-      "Team 1": "Highlanders",
-      "Team 2": "Blues",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 8,
-      "datetime": "01/03/2024 20:10",
-      "round": 2,
-      "venue": "AAMI Park",
-      "Team 1": "Rebels",
-      "Team 2": "Force",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 9,
-      "datetime": "02/03/2024 17:05",
-      "round": 2,
-      "venue": "AAMI Park",
-      "Team 1": "Moana Pasifika",
-      "Team 2": "Fijian Drua",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 10,
-      "datetime": "02/03/2024 19:35",
-      "round": 2,
-      "venue": "AAMI Park",
-      "Team 1": "Crusaders",
-      "Team 2": "Waratahs",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 11,
-      "datetime": "03/03/2024 14:00",
-      "round": 2,
-      "venue": "AAMI Park",
-      "Team 1": "Chiefs",
-      "Team 2": "Brumbies",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 12,
-      "datetime": "03/03/2024 16:30",
-      "round": 2,
-      "venue": "AAMI Park",
-      "Team 1": "Hurricanes",
-      "Team 2": "Reds",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 13,
-      "datetime": "08/03/2024 17:05",
-      "round": 3,
-      "venue": "TBC",
-      "Team 1": "Moana Pasifika",
-      "Team 2": "Rebels",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 14,
-      "datetime": "08/03/2024 19:35",
-      "round": 3,
-      "venue": "Allianz Stadium, Sydney",
-      "Team 1": "Waratahs",
-      "Team 2": "Highlanders",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 15,
-      "datetime": "09/03/2024 12:05",
-      "round": 3,
-      "venue": "TBC, Fiji",
-      "Team 1": "Fijian Drua",
-      "Team 2": "Crusaders",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 16,
-      "datetime": "09/03/2024 14:35",
-      "round": 3,
-      "venue": "TBC",
-      "Team 1": "Brumbies",
-      "Team 2": "Force",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 17,
-      "datetime": "09/03/2024 17:05",
-      "round": 3,
-      "venue": "Sky Stadium, Wellington",
-      "Team 1": "Hurricanes",
-      "Team 2": "Blues",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 18,
-      "datetime": "09/03/2024 19:35",
-      "round": 3,
-      "venue": "Suncorp Stadium, Brisbane",
-      "Team 1": "Reds",
-      "Team 2": "Chiefs",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 19,
-      "datetime": "15/03/2024 17:05",
-      "round": 4,
-      "venue": "Apollo Projects Stadium, Christchurch",
-      "Team 1": "Crusaders",
-      "Team 2": "Hurricanes",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 20,
-      "datetime": "15/03/2024 19:35",
-      "round": 4,
-      "venue": "AAMI Park, Melbourne",
-      "Team 1": "Rebels",
-      "Team 2": "Reds",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 21,
-      "datetime": "15/03/2024 22:00",
-      "round": 4,
-      "venue": "HBF Park, Perth",
-      "Team 1": "Force",
-      "Team 2": "Moana Pasifika",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 22,
-      "datetime": "16/03/2024 14:35",
-      "round": 4,
-      "venue": "FMG Stadium, Hamilton",
-      "Team 1": "Highlanders",
-      "Team 2": "Brumbies",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 23,
-      "datetime": "16/03/2024 17:05",
-      "round": 4,
-      "venue": "Rugby Park, Invercargill",
-      "Team 1": "Chiefs",
-      "Team 2": "Fijian Drua",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 24,
-      "datetime": "16/03/2024 19:35",
-      "round": 4,
-      "venue": "Allianz Stadium, Sydney",
-      "Team 1": "Waratahs",
-      "Team 2": "Blues",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 25,
-      "datetime": "22/03/2024 17:05",
-      "round": 5,
-      "venue": "TBC",
-      "Team 1": "Hurricanes",
-      "Team 2": "Rebels",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 26,
-      "datetime": "22/03/2024 19:35",
-      "round": 5,
-      "venue": "Gio Stadium, Canberra",
-      "Team 1": "Brumbies",
-      "Team 2": "Moana Pasifika",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 27,
-      "datetime": "23/03/2024 12:05",
-      "round": 5,
-      "venue": "TBC, Fiji",
-      "Team 1": "Fijian Drua",
-      "Team 2": "Waratahs",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 28,
-      "datetime": "23/03/2024 14:35",
-      "round": 5,
-      "venue": "FMG Stadium, Hamilton",
-      "Team 1": "Chiefs",
-      "Team 2": "Highlanders",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 29,
-      "datetime": "23/03/2024 17:05",
-      "round": 5,
-      "venue": "TBC, Auckland",
-      "Team 1": "Blues",
-      "Team 2": "Crusaders",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 30,
-      "datetime": "23/03/2024 19:35",
-      "round": 5,
-      "venue": "HBF Park, Perth",
-      "Team 1": "Force",
-      "Team 2": "Reds",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 31,
-      "datetime": "29/03/2024 17:05",
-      "round": 6,
-      "venue": "Apollo Projects Stadium, Christchurch",
-      "Team 1": "Crusaders",
-      "Team 2": "Chiefs",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 32,
-      "datetime": "29/03/2024 19:35",
-      "round": 6,
-      "venue": "Allianz Stadium, Sydney",
-      "Team 1": "Waratahs",
-      "Team 2": "Rebels",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 33,
-      "datetime": "30/03/2024 12:05",
-      "round": 6,
-      "venue": "TBC, Fiji",
-      "Team 1": "Fijian Drua",
-      "Team 2": "Force",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 34,
-      "datetime": "30/03/2024 14:35",
-      "round": 6,
-      "venue": "TBC",
-      "Team 1": "Moana Pasifika",
-      "Team 2": "Blues",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 35,
-      "datetime": "30/03/2024 17:05",
-      "round": 6,
-      "venue": "Forsyth Barr Stadium, Dunedin",
-      "Team 1": "Highlanders",
-      "Team 2": "Hurricanes",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 36,
-      "datetime": "30/03/2024 19:35",
-      "round": 6,
-      "venue": "Suncorp Stadium, Brisbane",
-      "Team 1": "Reds",
-      "Team 2": "Brumbies",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 37,
-      "datetime": "05/04/2024 17:05",
-      "round": 7,
-      "venue": "TBC, Auckland",
-      "Team 1": "Blues",
-      "Team 2": "Force",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 38,
-      "datetime": "05/04/2024 19:35",
-      "round": 7,
-      "venue": "AAMI Park, Melbourne",
-      "Team 1": "Rebels",
-      "Team 2": "Fijian Drua",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 39,
-      "datetime": "06/04/2024 17:05",
-      "round": 7,
-      "venue": "FMG Stadium, Hamilton",
-      "Team 1": "Chiefs",
-      "Team 2": "Moana Pasifika",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 40,
-      "datetime": "06/04/2024 19:35",
-      "round": 7,
-      "venue": "GIO Stadium, Canberra",
-      "Team 1": "Brumbies",
-      "Team 2": "Waratahs",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 41,
-      "datetime": "12/04/2024 17:05",
-      "round": 8,
-      "venue": "TBC",
-      "Team 1": "Moana Pasifika",
-      "Team 2": "Reds",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 42,
-      "datetime": "12/04/2024 19:35",
-      "round": 8,
-      "venue": "Allianz Stadium, Sydney",
-      "Team 1": "Waratahs",
-      "Team 2": "Crusaders",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 43,
-      "datetime": "13/04/2024 17:05",
-      "round": 8,
-      "venue": "Sky Stadium, Wellington",
-      "Team 1": "Hurricanes",
-      "Team 2": "Chiefs",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 44,
-      "datetime": "13/04/2024 19:35",
-      "round": 8,
-      "venue": "AAMI Park, Melbourne",
-      "Team 1": "Rebels",
-      "Team 2": "Highlanders",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 45,
-      "datetime": "19/04/2024 17:05",
-      "round": 9,
-      "venue": "TBC, Fiji",
-      "Team 1": "Fijian Drua",
-      "Team 2": "Hurricanes",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 46,
-      "datetime": "19/04/2024 19:35",
-      "round": 9,
-      "venue": "Suncorp Stadium, Brisbane",
-      "Team 1": "Reds",
-      "Team 2": "Highlanders",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 47,
-      "datetime": "20/04/2024 17:05",
-      "round": 9,
-      "venue": "TBC, Auckland",
-      "Team 1": "Blues",
-      "Team 2": "Brumbies",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 48,
-      "datetime": "20/04/2024 19:35",
-      "round": 9,
-      "venue": "HBF Park",
-      "Team 1": "Force",
-      "Team 2": "Crusaders",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 49,
-      "datetime": "26/04/2024 17:05",
-      "round": 10,
-      "venue": "Apollo Projects Stadium, Christchurch",
-      "Team 1": "Crusaders",
-      "Team 2": "Rebels",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 50,
-      "datetime": "26/04/2024 19:35",
-      "round": 10,
-      "venue": "Allianz Stadium, Sydney",
-      "Team 1": "Waratahs",
-      "Team 2": "Chiefs",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 51,
-      "datetime": "27/04/2024 12:05",
-      "round": 10,
-      "venue": "TBC, Fiji",
-      "Team 1": "Fijian Drua",
-      "Team 2": "Moana Pasifika",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 52,
-      "datetime": "27/04/2024 14:35",
-      "round": 10,
-      "venue": "GIO Stadium, Canberra",
-      "Team 1": "Brumbies",
-      "Team 2": "Hurricanes",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 53,
-      "datetime": "27/04/2024 17:05",
-      "round": 10,
-      "venue": "Forsyth Barr Stadium, Dunedin",
-      "Team 1": "Highlanders",
-      "Team 2": "Force",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 54,
-      "datetime": "27/04/2024 19:35",
-      "round": 10,
-      "venue": "Suncorp Stadium",
-      "Team 1": "Reds",
-      "Team 2": "Blues",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 55,
-      "datetime": "03/05/2024 17:05",
-      "round": 11,
-      "venue": "Sky Stadium, Wellington",
-      "Team 1": "Hurricanes",
-      "Team 2": "Waratahs",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 56,
-      "datetime": "03/05/2024 19:35",
-      "round": 11,
-      "venue": "AAMI Park, Melbourne",
-      "Team 1": "Rebels",
-      "Team 2": "Blues",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 57,
-      "datetime": "04/05/2024 12:05",
-      "round": 11,
-      "venue": "TBC",
-      "Team 1": "Moana Pasifika",
-      "Team 2": "Highlanders",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 58,
-      "datetime": "04/05/2024 14:35",
-      "round": 11,
-      "venue": "Apollo Projects Stadium, Christchurch",
-      "Team 1": "Crusaders",
-      "Team 2": "Reds",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 59,
-      "datetime": "04/05/2024 17:05",
-      "round": 11,
-      "venue": "FMG Stadium, Hamilton",
-      "Team 1": "Chiefs",
-      "Team 2": "Force",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 60,
-      "datetime": "04/05/2024 19:35",
-      "round": 11,
-      "venue": "GIO Stadium, Canberra",
-      "Team 1": "Brumbies",
-      "Team 2": "Fijian Drua",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 61,
-      "datetime": "10/05/2024 17:05",
-      "round": 12,
-      "venue": "TBC",
-      "Team 1": "Moana Pasifika",
-      "Team 2": "Chiefs",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 62,
-      "datetime": "10/05/2024 19:35",
-      "round": 12,
-      "venue": "Suncorp Stadium, Brisbane",
-      "Team 1": "Reds",
-      "Team 2": "Rebels",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 63,
-      "datetime": "11/05/2024 14:35",
-      "round": 12,
-      "venue": "TBC, Auckland",
-      "Team 1": "Blues",
-      "Team 2": "Hurricanes",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 64,
-      "datetime": "11/05/2024 17:05",
-      "round": 12,
-      "venue": "Forsyth Barr Stadium, Dunedin",
-      "Team 1": "Highlanders",
-      "Team 2": "Crusaders",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 65,
-      "datetime": "11/05/2024 19:35",
-      "round": 12,
-      "venue": "Allianz Stadium, Sydney",
-      "Team 1": "Waratahs",
-      "Team 2": "Brumbies",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 66,
-      "datetime": "11/05/2024 21:55",
-      "round": 12,
-      "venue": "HBF Stadium, Perth",
-      "Team 1": "Force",
-      "Team 2": "Fijian Drua",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 67,
-      "datetime": "17/05/2024 17:05",
-      "round": 13,
-      "venue": "Sky Stadium, Wellington",
-      "Team 1": "Hurricanes",
-      "Team 2": "Moana Pasifika",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 68,
-      "datetime": "17/05/2024 19:35",
-      "round": 13,
-      "venue": "AAMI Park, Melbourne",
-      "Team 1": "Rebels",
-      "Team 2": "Chiefs",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 69,
-      "datetime": "18/05/2024 12:05",
-      "round": 13,
-      "venue": "TBC, Fiji",
-      "Team 1": "Fijian Drua",
-      "Team 2": "Reds",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 70,
-      "datetime": "18/05/2024 14:35",
-      "round": 13,
-      "venue": "GIO Stadium, Canberra",
-      "Team 1": "Brumbies",
-      "Team 2": "Crusaders",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 71,
-      "datetime": "18/05/2024 17:05",
-      "round": 13,
-      "venue": "TBC, Auckland",
-      "Team 1": "Blues",
-      "Team 2": "Highlanders",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 72,
-      "datetime": "18/05/2024 19:35",
-      "round": 13,
-      "venue": "HBF Park, Perth",
-      "Team 1": "Force",
-      "Team 2": "Waratahs",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 73,
-      "datetime": "24/05/2024 17:05",
-      "round": 14,
-      "venue": "FMG Stadium, Hamilton",
-      "Team 1": "Chiefs",
-      "Team 2": "Hurricanes",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 74,
-      "datetime": "24/05/2024 19:35",
-      "round": 14,
-      "venue": "GIO Stadium, Canberra",
-      "Team 1": "Brumbies",
-      "Team 2": "Rebels",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 75,
-      "datetime": "25/05/2024 14:35",
-      "round": 14,
-      "venue": "TBC",
-      "Team 1": "Moana Pasifika",
-      "Team 2": "Waratahs",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 76,
-      "datetime": "25/05/2024 17:05",
-      "round": 14,
-      "venue": "Apollo Projects Stadium, Christchurch",
-      "Team 1": "Crusaders",
-      "Team 2": "Blues",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 77,
-      "datetime": "25/05/2024 19:35",
-      "round": 14,
-      "venue": "Suncorp Stadium, Brisbane",
-      "Team 1": "Reds",
-      "Team 2": "Force",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 78,
-      "datetime": "26/05/2024 12:05",
-      "round": 14,
-      "venue": "Forsyth Barr Stadium, Dunedin",
-      "Team 1": "Highlanders",
-      "Team 2": "Fijian Drua",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 79,
-      "datetime": "31/05/2024 17:05",
-      "round": 15,
-      "venue": "Apollo Projects Stadium, Christchurch",
-      "Team 1": "Crusaders",
-      "Team 2": "Moana Pasifika",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 80,
-      "datetime": "31/05/2024 19:35",
-      "round": 15,
-      "venue": "Allianz Stadium, Sydney",
-      "Team 1": "Waratahs",
-      "Team 2": "Reds",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 81,
-      "datetime": "01/06/2024 12:05",
-      "round": 15,
-      "venue": "TBC, Fiji",
-      "Team 1": "Fijian Drua",
-      "Team 2": "Rebels",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 82,
-      "datetime": "01/06/2024 14:35",
-      "round": 15,
-      "venue": "Sky Stadium, Wellington",
-      "Team 1": "Hurricanes",
-      "Team 2": "Highlanders",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 83,
-      "datetime": "01/06/2024 17:05",
-      "round": 15,
-      "venue": "TBC, Auckland",
-      "Team 1": "Blues",
-      "Team 2": "Chiefs",
-      "home": {
-         "away": "Home"
-      }
-   },
-    {
-      "index": 84,
-      "datetime": "01/06/2024 19:35",
-      "round": 15,
-      "venue": "HBF Park, Perth",
-      "Team 1": "Force",
-      "Team 2": "Brumbies",
-      "home": {
-         "away": "Home"
-      }
-   }
-   ]
+   {
+     "index": 1,
+     "datetime": "14/02/2025 17:05",
+     "round": 1,
+     "venue": "Apollo Projects Stadium, Christchurch",
+     "Team 1": "Crusaders",
+     "Team 2": "Hurricanes",
+     "homeaway": "home"
+   },
+   {
+     "index": 2,
+     "datetime": "14/02/2025 19:35",
+     "round": 1,
+     "venue": "Allianz Stadium, Sydney",
+     "Team 1": "Waratahs",
+     "Team 2": "Highlanders",
+     "homeaway": "home"
+   },
+   {
+     "index": 3,
+     "datetime": "15/02/2025 14:35",
+     "round": 1,
+     "venue": "HFC Bank Stadium, Suva",
+     "Team 1": "Fijian Drua",
+     "Team 2": "Brumbies",
+     "homeaway": "home"
+   },
+   {
+     "index": 4,
+     "datetime": "15/02/2025 17:05",
+     "round": 1,
+     "venue": "Eden Park, Auckland",
+     "Team 1": "Blues",
+     "Team 2": "Chiefs",
+     "homeaway": "home"
+   },
+   {
+     "index": 5,
+     "datetime": "15/02/2025 19:35",
+     "round": 1,
+     "venue": "HBF Park, Perth",
+     "Team 1": "Force",
+     "Team 2": "Moana Pasifika",
+     "homeaway": "home"
+   },
+   {
+     "index": 6,
+     "datetime": "21/02/2025 17:05",
+     "round": 2,
+     "venue": "FMG Stadium Waikato, Hamilton",
+     "Team 1": "Chiefs",
+     "Team 2": "Crusaders",
+     "homeaway": "home"
+   },
+   {
+     "index": 7,
+     "datetime": "21/02/2025 19:35",
+     "round": 2,
+     "venue": "Suncorp Stadium, Brisbane",
+     "Team 1": "Reds",
+     "Team 2": "Moana Pasifika",
+     "homeaway": "home"
+   },
+   {
+     "index": 8,
+     "datetime": "22/02/2025 14:35",
+     "round": 2,
+     "venue": "McLean Park, Napier",
+     "Team 1": "Hurricanes",
+     "Team 2": "Fijian Drua",
+     "homeaway": "home"
+   },
+   {
+     "index": 9,
+     "datetime": "22/02/2025 17:05",
+     "round": 2,
+     "venue": "Forsyth Barr Stadium, Dunedin",
+     "Team 1": "Highlanders",
+     "Team 2": "Blues",
+     "homeaway": "home"
+   },
+   {
+     "index": 10,
+     "datetime": "22/02/2025 19:35",
+     "round": 2,
+     "venue": "GIO Stadium, Canberra",
+     "Team 1": "Brumbies",
+     "Team 2": "Force",
+     "homeaway": "home"
+   },
+   {
+     "index": 11,
+     "datetime": "28/02/2025 17:05",
+     "round": 3,
+     "venue": "North Harbour Stadium, Auckland",
+     "Team 1": "Moana Pasifika",
+     "Team 2": "Highlanders",
+     "homeaway": "home"
+   },
+   {
+     "index": 12,
+     "datetime": "28/02/2025 19:35",
+     "round": 4,
+     "venue": "Allianz Stadium, Sydney",
+     "Team 1": "Waratahs",
+     "Team 2": "Fijian Drua",
+     "homeaway": "home"
+   },
+   {
+     "index": 13,
+     "datetime": "1/03/2025 14:35",
+     "round": 5,
+     "venue": "FMG Stadium Waikato, Hamilton",
+     "Team 1": "Chiefs",
+     "Team 2": "Brumbies",
+     "homeaway": "home"
+   },
+   {
+     "index": 14,
+     "datetime": "1/03/2025 17:05",
+     "round": 6,
+     "venue": "Sky Stadium, Wellington",
+     "Team 1": "Hurricanes",
+     "Team 2": "Blues",
+     "homeaway": "home"
+   },
+   {
+     "index": 15,
+     "datetime": "1/03/2025 19:35",
+     "round": 7,
+     "venue": "HBF Park, Perth",
+     "Team 1": "Force",
+     "Team 2": "Reds",
+     "homeaway": "home"
+   },
+   {
+     "index": 16,
+     "datetime": "7/03/2025 17:05",
+     "round": 4,
+     "venue": "Eden Park, Auckland",
+     "Team 1": "Blues",
+     "Team 2": "Brumbies",
+     "homeaway": "home"
+   },
+   {
+     "index": 17,
+     "datetime": "8/03/2025 14:35",
+     "round": 4,
+     "venue": "Churchill Park, Lautoka",
+     "Team 1": "Fijian Drua",
+     "Team 2": "Chiefs",
+     "homeaway": "home"
+   },
+   {
+     "index": 18,
+     "datetime": "8/03/2025 17:05",
+     "round": 4,
+     "venue": "North Harbour Stadium, Auckland",
+     "Team 1": "Moana Pasifika",
+     "Team 2": "Hurricanes",
+     "homeaway": "home"
+   },
+   {
+     "index": 19,
+     "datetime": "8/03/2025 19:35",
+     "round": 4,
+     "venue": "Allianz Stadium, Sydney",
+     "Team 1": "Waratahs",
+     "Team 2": "Force",
+     "homeaway": "home"
+   },
+   {
+     "index": 20,
+     "datetime": "9/03/2025 13:35",
+     "round": 4,
+     "venue": "Apollo Projects Stadium, Christchurch",
+     "Team 1": "Crusaders",
+     "Team 2": "Reds",
+     "homeaway": "home"
+   },
+   {
+     "index": 21,
+     "datetime": "14/03/2025 17:05",
+     "round": 5,
+     "venue": "Forsyth Barr Stadium, Dunedin",
+     "Team 1": "Highlanders",
+     "Team 2": "Hurricanes",
+     "homeaway": "home"
+   },
+   {
+     "index": 22,
+     "datetime": "14/03/2025 19:35",
+     "round": 6,
+     "venue": "GIO Stadium, Canberra",
+     "Team 1": "Brumbies",
+     "Team 2": "Fijian Drua",
+     "homeaway": "home"
+   },
+   {
+     "index": 23,
+     "datetime": "15/03/2025 14:35",
+     "round": 7,
+     "venue": "Apollo Projects Stadium, Christchurch",
+     "Team 1": "Crusaders",
+     "Team 2": "Force",
+     "homeaway": "home"
+   },
+   {
+     "index": 24,
+     "datetime": "15/03/2025 17:05",
+     "round": 8,
+     "venue": "FMG Stadium Waikato, Hamilton",
+     "Team 1": "Chiefs",
+     "Team 2": "Blues",
+     "homeaway": "home"
+   },
+   {
+     "index": 25,
+     "datetime": "15/03/2025 19:35",
+     "round": 9,
+     "venue": "Suncorp Stadium, Brisbane",
+     "Team 1": "Reds",
+     "Team 2": "Waratahs",
+     "homeaway": "home"
+   },
+   {
+     "index": 26,
+     "datetime": "21/03/2025 17:05",
+     "round": 6,
+     "venue": "Teufaiva Sport Stadium, Tonga",
+     "Team 1": "Moana Pasifika",
+     "Team 2": "Chiefs",
+     "homeaway": "home"
+   },
+   {
+     "index": 27,
+     "datetime": "22/03/2025 14:35",
+     "round": 6,
+     "venue": "Forsyth Barr Stadium, Dunedin",
+     "Team 1": "Highlanders",
+     "Team 2": "Reds",
+     "homeaway": "home"
+   },
+   {
+     "index": 28,
+     "datetime": "22/03/2025 17:05",
+     "round": 6,
+     "venue": "Eden Park, Auckland",
+     "Team 1": "Blues",
+     "Team 2": "Crusaders",
+     "homeaway": "home"
+   },
+   {
+     "index": 29,
+     "datetime": "22/03/2025 14:35",
+     "round": 6,
+     "venue": "Allianz Stadium, Sydney",
+     "Team 1": "Waratahs",
+     "Team 2": "Brumbies",
+     "homeaway": "home"
+   },
+   {
+     "index": 30,
+     "datetime": "23/03/2025 17:05",
+     "round": 6,
+     "venue": "HBF Park, Perth",
+     "Team 1": "Force",
+     "Team 2": "Fijian Drua",
+     "homeaway": "home"
+   },
+   {
+     "index": 31,
+     "datetime": "28/03/2025 17:05",
+     "round": 7,
+     "venue": "TBC",
+     "Team 1": "Hurricanes",
+     "Team 2": "Waratahs",
+     "homeaway": "home"
+   },
+   {
+     "index": 32,
+     "datetime": "28/03/2025 19:35",
+     "round": 7,
+     "venue": "GIO Stadium, Canberra",
+     "Team 1": "Brumbies",
+     "Team 2": "Highlanders",
+     "homeaway": "home"
+   },
+   {
+     "index": 33,
+     "datetime": "29/03/2025 17:05",
+     "round": 7,
+     "venue": "Apollo Projects Stadium, Christchurch",
+     "Team 1": "Crusaders",
+     "Team 2": "Moana Pasifika",
+     "homeaway": "home"
+   },
+   {
+     "index": 34,
+     "datetime": "29/03/2025 19:35",
+     "round": 7,
+     "venue": "Suncorp Stadium, Brisbane",
+     "Team 1": "Reds",
+     "Team 2": "Force",
+     "homeaway": "home"
+   },
+   {
+     "index": 35,
+     "datetime": "4/04/2025 17:05",
+     "round": 8,
+     "venue": "FMG Stadum Waikato, Hamilton",
+     "Team 1": "Chiefs",
+     "Team 2": "Reds",
+     "homeaway": "home"
+   },
+   {
+     "index": 36,
+     "datetime": "5/04/2025 12:05",
+     "round": 8,
+     "venue": "North Harbour Stadium, Auckland",
+     "Team 1": "Moana Pasifika",
+     "Team 2": "Waratahs",
+     "homeaway": "home"
+   },
+   {
+     "index": 37,
+     "datetime": "5/04/2025 13:35",
+     "round": 8,
+     "venue": "HFC Bank Stadium, Fiji",
+     "Team 1": "Fijian Drua",
+     "Team 2": "Crusaders",
+     "homeaway": "home"
+   },
+   {
+     "index": 38,
+     "datetime": "5/04/2025 16:05",
+     "round": 8,
+     "venue": "Eden Park, Auckland",
+     "Team 1": "Blues",
+     "Team 2": "Hurricanes",
+     "homeaway": "home"
+   },
+   {
+     "index": 39,
+     "datetime": "5/04/2025 18:35",
+     "round": 8,
+     "venue": "HBF Park, Perth",
+     "Team 1": "Force",
+     "Team 2": "Highlanders",
+     "homeaway": "home"
+   },
+   {
+     "index": 40,
+     "datetime": "11/04/2025 17:05",
+     "round": 9,
+     "venue": "Sky Stadium, Wellington",
+     "Team 1": "Hurricanes",
+     "Team 2": "Crusaders",
+     "homeaway": "home"
+   },
+   {
+     "index": 41,
+     "datetime": "11/04/2025 19:35",
+     "round": 9,
+     "venue": "Allianz Stadium, Sydney",
+     "Team 1": "Waratahs",
+     "Team 2": "Chiefs",
+     "homeaway": "home"
+   },
+   {
+     "index": 42,
+     "datetime": "12/04/2025 14:35",
+     "round": 9,
+     "venue": "Eden Park, Auckland",
+     "Team 1": "Blues",
+     "Team 2": "Moana Pasifika",
+     "homeaway": "home"
+   },
+   {
+     "index": 43,
+     "datetime": "12/04/2025 17:05",
+     "round": 9,
+     "venue": "Forsyth Barr Stadium, Dunedin",
+     "Team 1": "Highlanders",
+     "Team 2": "Fijian Drua",
+     "homeaway": "home"
+   },
+   {
+     "index": 44,
+     "datetime": "12/04/2025 19:35",
+     "round": 9,
+     "venue": "Suncorp Stadium, Brisbane",
+     "Team 1": "Reds",
+     "Team 2": "Brumbies",
+     "homeaway": "home"
+   },
+   {
+     "index": 45,
+     "datetime": "18/04/2025 17:05",
+     "round": 10,
+     "venue": "Apollo Projects Stadium, Christchurch",
+     "Team 1": "Crusaders",
+     "Team 2": "Blues",
+     "homeaway": "home"
+   },
+   {
+     "index": 46,
+     "datetime": "19/04/2025 23:05",
+     "round": 10,
+     "venue": "TBC",
+     "Team 1": "Moana Pasifika",
+     "Team 2": "Brumbies",
+     "homeaway": "home"
+   },
+   {
+     "index": 47,
+     "datetime": "19/04/2025 13:35",
+     "round": 10,
+     "venue": "Churchill Park, Fiji",
+     "Team 1": "Fijian Drua",
+     "Team 2": "Waratahs",
+     "homeaway": "home"
+   },
+   {
+     "index": 48,
+     "datetime": "19/04/2025 17:05",
+     "round": 10,
+     "venue": "FMG Stadium Waikato, Hamilton",
+     "Team 1": "Chiefs",
+     "Team 2": "Highlanders",
+     "homeaway": "home"
+   },
+   {
+     "index": 49,
+     "datetime": "27/04/2025 19:35",
+     "round": 10,
+     "venue": "HBF Park, Perth",
+     "Team 1": "Force",
+     "Team 2": "Hurricanes",
+     "homeaway": "home"
+   },
+   {
+     "index": 50,
+     "datetime": "25/04/2025 17:05",
+     "round": 11,
+     "venue": "TBC",
+     "Team 1": "Chiefs",
+     "Team 2": "Force",
+     "homeaway": "home"
+   },
+   {
+     "index": 51,
+     "datetime": "25/04/2025 19:35",
+     "round": 12,
+     "venue": "Suncorp Stadium, Brisbane",
+     "Team 1": "Reds",
+     "Team 2": "Blues",
+     "homeaway": "home"
+   },
+   {
+     "index": 52,
+     "datetime": "26/04/2025 14:35",
+     "round": 13,
+     "venue": "North Harbour Stadium, Auckland",
+     "Team 1": "Moana Pasifika",
+     "Team 2": "Fijian Drua",
+     "homeaway": "home"
+   },
+   {
+     "index": 53,
+     "datetime": "1/04/2025 17:05",
+     "round": 14,
+     "venue": "Forsyth Barr Stadium, Dunedin",
+     "Team 1": "Highlanders",
+     "Team 2": "Crusaders",
+     "homeaway": "home"
+   },
+   {
+     "index": 54,
+     "datetime": "26/04/2025 19:35",
+     "round": 15,
+     "venue": "GIO Stadium, Canberra",
+     "Team 1": "Brumbies",
+     "Team 2": "Hurricanes",
+     "homeaway": "home"
+   },
+   {
+     "index": 55,
+     "datetime": "2/05/2025 17:05",
+     "round": 12,
+     "venue": "Eden Park, Auckland",
+     "Team 1": "Blues",
+     "Team 2": "Force",
+     "homeaway": "home"
+   },
+   {
+     "index": 56,
+     "datetime": "3/05/2025 12:05",
+     "round": 12,
+     "venue": "HFC Bank Stadium, Suva",
+     "Team 1": "Fijian Drua",
+     "Team 2": "Reds",
+     "homeaway": "home"
+   },
+   {
+     "index": 57,
+     "datetime": "3/05/2025 17:05",
+     "round": 12,
+     "venue": "Sky Stadium, Wellington",
+     "Team 1": "Hurricanes",
+     "Team 2": "Chiefs",
+     "homeaway": "home"
+   },
+   {
+     "index": 58,
+     "datetime": "3/05/2025 19:35",
+     "round": 12,
+     "venue": "GIO Stadium, Canberra",
+     "Team 1": "Brumbies",
+     "Team 2": "Waratahs",
+     "homeaway": "home"
+   },
+   {
+     "index": 59,
+     "datetime": "4/05/2025 13:35",
+     "round": 12,
+     "venue": "Forsyth Barr Stadium, Dunedin",
+     "Team 1": "Highlanders",
+     "Team 2": "Moana Pasifika",
+     "homeaway": "home"
+   },
+   {
+     "index": 60,
+     "datetime": "9/05/2025 17:05",
+     "round": 13,
+     "venue": "HFC Bank Stadium, Suva",
+     "Team 1": "Fijian Drua",
+     "Team 2": "Blues",
+     "homeaway": "home"
+   },
+   {
+     "index": 61,
+     "datetime": "9/05/2025 19:35",
+     "round": 13,
+     "venue": "Allianz Stadium, Sydney",
+     "Team 1": "Waratahs",
+     "Team 2": "Reds",
+     "homeaway": "home"
+   },
+   {
+     "index": 62,
+     "datetime": "10/05/2025 17:05",
+     "round": 13,
+     "venue": "Apollo Projects Stadium, Christchurch",
+     "Team 1": "Crusaders",
+     "Team 2": "Chiefs",
+     "homeaway": "home"
+   },
+   {
+     "index": 63,
+     "datetime": "10/05/2025 19:35",
+     "round": 13,
+     "venue": "HBF Park, Perth",
+     "Team 1": "Force",
+     "Team 2": "Brumbies",
+     "homeaway": "home"
+   },
+   {
+     "index": 64,
+     "datetime": "16/05/2025 17:05",
+     "round": 14,
+     "venue": "Sky Stadium, Wellington",
+     "Team 1": "Hurricanes",
+     "Team 2": "Highlanders",
+     "homeaway": "home"
+   },
+   {
+     "index": 65,
+     "datetime": "16/05/2025 19:35",
+     "round": 14,
+     "venue": "Allianz Stadium",
+     "Team 1": "Waratahs",
+     "Team 2": "Crusaders",
+     "homeaway": "home"
+   },
+   {
+     "index": 66,
+     "datetime": "17/05/2025 13:35",
+     "round": 14,
+     "venue": "Churchill Park, Lautoka",
+     "Team 1": "Fijian Drua",
+     "Team 2": "Force",
+     "homeaway": "home"
+   },
+   {
+     "index": 67,
+     "datetime": "17/05/2025 17:05",
+     "round": 14,
+     "venue": "North Harbourn Stadium, Auckland",
+     "Team 1": "Moana Pasifika",
+     "Team 2": "Blues",
+     "homeaway": "home"
+   },
+   {
+     "index": 68,
+     "datetime": "17/05/2025 19:35",
+     "round": 14,
+     "venue": "GIO Stadium, Canberra",
+     "Team 1": "Brumbies",
+     "Team 2": "Reds",
+     "homeaway": "home"
+   },
+   {
+     "index": 69,
+     "datetime": "23/05/2025 17:05",
+     "round": 15,
+     "venue": "Apollo Projects Stadium, Christchurch",
+     "Team 1": "Crusaders",
+     "Team 2": "Highlanders",
+     "homeaway": "home"
+   },
+   {
+     "index": 70,
+     "datetime": "23/05/2025 19:35",
+     "round": 15,
+     "venue": "Suncorp Stadium, Brisbane",
+     "Team 1": "Reds",
+     "Team 2": "Hurricanes",
+     "homeaway": "home"
+   },
+   {
+     "index": 71,
+     "datetime": "24/05/2025 17:05",
+     "round": 15,
+     "venue": "FMG Stadium Waikato, Hamilton",
+     "Team 1": "Chiefs",
+     "Team 2": "Moana Pasifika",
+     "homeaway": "home"
+   },
+   {
+     "index": 72,
+     "datetime": "24/05/2025 19:35",
+     "round": 15,
+     "venue": "HBF Park, Perth",
+     "Team 1": "Force",
+     "Team 2": "Waratahs",
+     "homeaway": "home"
+   },
+   {
+     "index": 73,
+     "datetime": "30/05/2025 17:05",
+     "round": 16,
+     "venue": "Forsyth Barr Stadium, Dunedin",
+     "Team 1": "Highlanders",
+     "Team 2": "Chiefs",
+     "homeaway": "home"
+   },
+   {
+     "index": 74,
+     "datetime": "30/05/2025 19:35",
+     "round": 16,
+     "venue": "GIO Stadium, Canberra",
+     "Team 1": "Brumbies",
+     "Team 2": "Crusaders",
+     "homeaway": "home"
+   },
+   {
+     "index": 75,
+     "datetime": "31/05/2025 14:35",
+     "round": 16,
+     "venue": "Eden Park, Auckland",
+     "Team 1": "Blues",
+     "Team 2": "Waratahs",
+     "homeaway": "home"
+   },
+   {
+     "index": 76,
+     "datetime": "31/05/2025 17:05",
+     "round": 16,
+     "venue": "Sky Stadium, Wellington",
+     "Team 1": "Hurricanes",
+     "Team 2": "Moana Pasifika",
+     "homeaway": "home"
+   },
+   {
+     "index": 77,
+     "datetime": "31/05/2025 19:35",
+     "round": 16,
+     "venue": "Suncorp Stadium, Brisbane",
+     "Team 1": "Reds",
+     "Team 2": "Fijian Drua",
+     "homeaway": "home"
+   }]
+   

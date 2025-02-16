@@ -12,7 +12,7 @@ $(document).ready(function () {
 	$.get('/getRound', function (roundD) {
 		gRound = { draft: roundD.round, match: 0 };
 
-		listRounds(15);//set to latest round
+		listRounds(16);//set to latest round
 		getCurrentSeason().then((currD) => {
 			currData = currD;
 			gRound.match = getCurrentMatch(gRound.draft);
