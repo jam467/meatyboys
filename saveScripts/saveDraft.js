@@ -56,6 +56,7 @@ function getPage(pageNo, cookie, round, playing) {
 			var indexTemp = 0;
 			var playStart = 0;
 			var playEnd = 0;
+			console.log(Content);
 			begin = Content.indexOf('<tr>', begin);
 			while (begin != -1) {
 				posStart = Content.indexOf('<td>', begin);
@@ -68,43 +69,47 @@ function getPage(pageNo, cookie, round, playing) {
 				playStart = Content.indexOf('>', indexTemp + 4);
 				playEnd = Content.indexOf('<', playStart);
 				var playerName = Content.slice(playStart + 1, playEnd).trim();
-				teamStart = Content.indexOf('<td>', playEnd);
-				teamEnd = Content.indexOf('<', teamStart + 4);
-				var team = Content.slice(teamStart + 4, teamEnd);
-				userStart = Content.indexOf('<td>', teamEnd);
-				userEnd = Content.indexOf('<', userStart + 4);
-				var userName = Content.slice(userStart + 4, userEnd);
-				indexTemp = Content.indexOf('<td>', userEnd);
-				scoreStart = Content.indexOf('<td>', indexTemp + 4);
-				scoreEnd = Content.indexOf('<', scoreStart + 4);
-				var score = Content.slice(scoreStart + 4, scoreEnd);
-				TNStart = Content.indexOf('<td', scoreEnd + 4);
-				TNEnd = Content.indexOf('<', TNStart + 4);
-				var TN = Content.slice(TNStart + 4, TNEnd);
-				begin = Content.indexOf('<td>', scoreEnd);
-				TN = TN.substring(37, TN.length - 13);
-				team = team.substring(14, team.length);
-				position = position.substring(14, position.length);
-				score = score.substring(14, score.length);
-				userName = userName.substring(14, userName.length);
-				var bench = true;
-				for (var k = 0; k < playing.length; k++) {
-					if (playerName === playing[k]) {
-						bench = false;
+				if (!(playerName == '' || playerName == ' ')) {
+					teamStart = Content.indexOf('<td>', playEnd);
+					teamEnd = Content.indexOf('<', teamStart + 4);
+					var team = Content.slice(teamStart + 4, teamEnd);
+					userStart = Content.indexOf('<td>', teamEnd);
+					userEnd = Content.indexOf('<', userStart + 4);
+					var userName = Content.slice(userStart + 4, userEnd);
+					indexTemp = Content.indexOf('<td>', userEnd);
+					scoreStart = Content.indexOf('<td>', indexTemp + 4);
+					scoreEnd = Content.indexOf('<', scoreStart + 4);
+					var score = Content.slice(scoreStart + 4, scoreEnd);
+					TNStart = Content.indexOf('<td', scoreEnd + 4);
+					TNEnd = Content.indexOf('<', TNStart + 4);
+					var TN = Content.slice(TNStart + 4, TNEnd);
+					begin = Content.indexOf('<td>', scoreEnd);
+					TN = TN.substring(37, TN.length - 13);
+					team = team.substring(14, team.length);
+					position = position.substring(14, position.length);
+					score = score.substring(14, score.length);
+					userName = userName.substring(14, userName.length);
+					var bench = true;
+					for (var k = 0; k < playing.length; k++) {
+						if (playerName === playing[k]) {
+							bench = false;
+						}
 					}
+					// console.log(playerId)
+					matches[i] = {
+						"playerName": playerName,
+						"team": team,
+						"userName": userName,
+						"bench": bench,
+						"score": score,
+						"position": position,
+						"teamNews": TN,
+						"playerId": playerId
+					};
+					i++;
+				}else{
+					begin = Content.indexOf('<td>', indexTemp+6);
 				}
-				// console.log(playerId)
-				matches[i] = {
-					"playerName": playerName,
-					"team": team,
-					"userName": userName,
-					"bench": bench,
-					"score": score,
-					"position": position,
-					"teamNews": TN,
-					"playerId": playerId
-				};
-				i++;
 
 			}
 			complete++;
@@ -113,12 +118,12 @@ function getPage(pageNo, cookie, round, playing) {
 				fs.readFile(loc + 'downloads/draftPlayers' + round + '.js', async function (err, dpData) {
 					var tally = 0;
 					for (var p = 0; p < matches.length; p++) {
-							if (matches[p].position === "Front Row") {
+						if (matches[p].position === "Front Row") {
 							tally++;
 						}
 					}
 					if (tally > 5) {
-					if (!dpData||(matches.length >= dpData.length)) {
+						if (!dpData || (matches.length >= dpData.length)) {
 							fs.writeFile(loc + 'downloads/draftPlayers' + round + '.json', JSON.stringify(matches), function (err) {
 								//if (err) throw err;
 								console.log('Saved!' + round);
