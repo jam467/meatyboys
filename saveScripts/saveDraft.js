@@ -56,7 +56,6 @@ function getPage(pageNo, cookie, round, playing) {
 			var indexTemp = 0;
 			var playStart = 0;
 			var playEnd = 0;
-			console.log(Content);
 			begin = Content.indexOf('<tr>', begin);
 			while (begin != -1) {
 				posStart = Content.indexOf('<td>', begin);
