@@ -145,7 +145,7 @@ function getMatchup(cookie) {
 			headers: {
 				Cookie: cookie
 			},
-			url: 'http://fantasyrugbydraft.com/matchup/Meaty_Boys_5'
+			url: 'http://fantasyrugbydraft.com/matchup/Meaty_Boys_6'
 		},
 			function (error, response, body) {
 				var matchIds = [];
